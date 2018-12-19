@@ -3,7 +3,10 @@
 Web/HaiChat/.idea/
 Web/HaiChat/.gradle/
 Web/HaiChat/build/
+Web/HaiChat/out/
 
 App/HaiChat/.idea/
+App/HaiChat/.gradle/
+App/HaiChat/build/
 
 Web/HaiChat/out/*
