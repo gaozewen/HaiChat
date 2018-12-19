@@ -1,0 +1,9 @@
+*.lock
+
+Web/HaiChat/.idea/
+Web/HaiChat/.gradle/
+Web/HaiChat/build/
+
+App/HaiChat/.idea/
+
+Web/HaiChat/out/*
