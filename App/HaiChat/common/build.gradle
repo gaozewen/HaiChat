@@ -36,6 +36,9 @@ dependencies {
     // 使用 父工程定义的版本号
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
 
+    // RecycleAdapter 中需要继承
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
+
     // butterknife
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
 }
