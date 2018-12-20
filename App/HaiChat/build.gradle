@@ -5,10 +5,14 @@ buildscript {
     repositories {
         google()
         jcenter()
+
+        mavenCentral() // butterknife
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        
+
+        // butterknife
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -34,5 +38,7 @@ ext {
     // 相关依赖库版本
     // app 目录下 build.gradle 中 implementation 'com.android.support:appcompat-v7:28.0.0'
     supportVersion = '28.0.0'
+
+    butterknifeVersion = '9.0.0-rc2'
 
 }

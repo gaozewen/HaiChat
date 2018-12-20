@@ -8,9 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public abstract class Fragment extends android.support.v4.app.Fragment {
 
     protected View mRoot; // 因为 root 可能被复用
+    protected Unbinder mRootUnBinder;
+
 
     // 当 F 添加到 Activity 的时候，最先调用的方法是 onAttach
     // 而 Activity 就是 context
@@ -70,7 +75,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
      * @param root 根布局
      */
     protected void initWidget(View root){
-
+        mRootUnBinder = ButterKnife.bind(this,root); // 绑定 F 到 root(A) 中
     }
 
     /**
@@ -78,5 +83,13 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
      */
     protected void initData() {
 
+    }
+
+    /**
+     * 返回按键触发时调用
+     * @return 返回 true 代表我已经处理返回逻辑，Activity 不用自己 finish。返回 false 代表我没有处理，Activity 自己走自己的逻辑
+     */
+    public boolean onBackPressed() {
+        return false;
     }
 }

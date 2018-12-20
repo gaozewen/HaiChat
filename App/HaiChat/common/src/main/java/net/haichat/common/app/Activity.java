@@ -2,7 +2,12 @@ package net.haichat.common.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import java.util.List;
+
+import butterknife.ButterKnife;
 
 public abstract class Activity extends AppCompatActivity {
 
@@ -55,7 +60,8 @@ public abstract class Activity extends AppCompatActivity {
      * 初始化控件
      */
     protected void initWidget(){
-
+        // 写了这个就不用再 写 findViewById 这些东西啦
+        ButterKnife.bind(this); // Activity 的绑定
     }
 
     /**
@@ -79,6 +85,20 @@ public abstract class Activity extends AppCompatActivity {
     public void onBackPressed() {
         // 情景：当此 Activity 中 有多个 Fragment，而我只想返回上一个 Fragment
         // 知识点：涉及到 Activity 和 Fragment 之间的通讯
+
+        // 得到当前 Activity 下的所有 F
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        // 判断 Fs 是否为空
+        if(fragments.size() > 0){
+            for (Fragment fragment : fragments) {
+                // 如果这个 Fragment 是我们自己写的 F
+                if(fragment instanceof net.haichat.common.app.Fragment){
+                    // F 自己处理了返回操作，拦截了返回按钮，直接 return
+                    if(((net.haichat.common.app.Fragment) fragment).onBackPressed()) return;
+                }
+            }
+        }
+
         super.onBackPressed();
         finish();
     }
