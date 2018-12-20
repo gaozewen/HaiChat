@@ -1,11 +1,42 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="AppTheme.Base">
+        <!--<item name="toolbarStyle">@style/Widget.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.ToolbarNavigationButtonStyle</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.PopupMenu.Overflow</item>-->
+
+        <!-- 顶部导航条中的 Icon 和 二级字体 激活状态 的颜色 -->
+        <item name="colorControlNormal">@color/white_alpha_240</item>
+        <item name="colorControlActivated">@color/textPrimary</item>
     </style>
 
+    <!-- 使状态栏透明 -->
+    <style name="AppTheme.TransStatusBar.Base" parent="AppTheme">
+        <!-- 去除顶部的状态栏 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <!-- 5.0 以上状态栏 还有渐进色，需要 在 v21 中覆写 -->
+    <style name="AppTheme.TransStatusBar" parent="AppTheme.TransStatusBar.Base" />
+
+    <style name="AppTheme.Main" parent="AppTheme.TransStatusBar">
+        <!-- 主界面中使用的 toolbar 颜色 覆写了 common styles 中的颜色 -->
+        <!-- android 默认使用 就近原则 -->
+        <item name="toolbarTitleColor">@color/white</item>
+        <item name="toolbarMenuIconColor">@color/white</item>
+        <item name="colorControlHighlight">@color/textSecond</item>
+        <item name="android:windowBackground">@color/windowsBackgroundLight</item>
+    </style>
+
+    <!-- 覆写了 support 包中的 字体 和 颜色大小 -->
+    <!-- 这样定义全局字体大小 和 颜色，利于后期维护 -->
+    <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">?attr/toolbarTitleSize</item>
+        <item name="android:textColor">?attr/toolbarTitleColor</item>
+    </style>
 </resources>
