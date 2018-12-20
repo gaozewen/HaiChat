@@ -41,4 +41,15 @@ dependencies {
 
     // butterknife
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+
+    // design 包中包含了许多 support 包中的 控件 和 主题
+    api "com.android.support:design:$rootProject.ext.supportVersion"
+    // 老师写的 UI 控件包，简化 Material Design 低版本的适配
+    api "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+    // 老师写的 RES 资源包，包括常见的 颜色 高度
+    api "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
+    // 圆形头像的库
+    api "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
+    // glide 图片加载框架
+    api "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
 }

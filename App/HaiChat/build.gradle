@@ -38,7 +38,11 @@ ext {
     // 相关依赖库版本
     // app 目录下 build.gradle 中 implementation 'com.android.support:appcompat-v7:28.0.0'
     supportVersion = '28.0.0'
-
+    // 注解绑定
     butterknifeVersion = '9.0.0-rc2'
+
+    geniusVersion = '2.0.0'
+    glideVersion = '3.7.0'
+    circleimageviewVersion = '2.1.0'
 
 }

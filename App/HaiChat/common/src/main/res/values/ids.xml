@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- recycler 封装的 tag 属性 -->
     <item name="tag_recycler_holder" type="id"/>
+    <!-- 默认头像的 drawable 名 -->
+    <!-- 注意：这个头像并不在 common 包中，而在 app 资源包中，我们这里只是定义，打包编译后是可以引用的 -->
+    <item name="default_portrait" type="drawable" />
 </resources>
