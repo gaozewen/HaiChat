@@ -4,9 +4,10 @@ package net.haichat.push;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,14 +19,20 @@ import com.bumptech.glide.request.target.ViewTarget;
 import net.haichat.common.app.Activity;
 import net.haichat.common.widget.PortraitView;
 import net.haichat.push.frags.main.ActiveFragment;
+import net.haichat.push.frags.main.ContactFragment;
 import net.haichat.push.frags.main.GroupFragment;
 import net.haichat.push.helper.NavHelper;
+import net.qiujuer.genius.ui.Ui;
+import net.qiujuer.genius.ui.widget.FloatActionButton;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends Activity
-        implements BottomNavigationView.OnNavigationItemSelectedListener {
+        implements BottomNavigationView.OnNavigationItemSelectedListener,
+        NavHelper.OnTabChangedListener<Integer> {
 
     @BindView(R.id.appbar)
     AppBarLayout mAppbar;       // 顶部导航条
@@ -42,7 +49,10 @@ public class MainActivity extends Activity
     @BindView(R.id.navigation)
     BottomNavigationView mNavigation; // 底部导航栏
 
-    private NavHelper mNavHelper; // 工具类变量
+    @BindView(R.id.btn_action)
+    FloatActionButton mAction;        // 容器右下角 浮动按钮
+
+    private NavHelper<Integer> mNavHelper; // 工具类变量
 
     @Override
     protected int getContentLayoutId() {
@@ -54,7 +64,11 @@ public class MainActivity extends Activity
         super.initWidget();
 
         // 初始化 BottomNavigation 工具类
-        mNavHelper = new NavHelper();
+        mNavHelper = new NavHelper<>(this, R.id.lay_container, getSupportFragmentManager(), this);
+        mNavHelper
+                .add(R.id.action_home, new NavHelper.Tab<>(ActiveFragment.class, R.string.title_home))
+                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
+                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
 
         // 设置 BottomNavigation 切换事件监听
         mNavigation.setOnNavigationItemSelectedListener(this);
@@ -71,6 +85,16 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+
+        // 从底部导航中接管我们的 Menu，然后 进行手动额触发第一次点击
+        Menu menu = mNavigation.getMenu();
+        // 触发首次选中 Home，即相当于 触发 下面的 onNavigationItemSelected 方法
+        menu.performIdentifierAction(R.id.action_home,0);
     }
 
     /**
@@ -101,5 +125,43 @@ public class MainActivity extends Activity
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // 转接 事件流 到工具类中
         return mNavHelper.performClickMenu(menuItem.getItemId()); // 返回 true 表示正常处理
+    }
+
+    /**
+     * 实现 NavHelper 事件处理完成 回调
+     *
+     * @param newTab
+     * @param oldTab
+     */
+    @Override
+    public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
+        // 从 额外字段中 取出 我们的 title 资源 id
+        mTitle.setText(newTab.extra);
+
+        // 对 中间容器右下角 浮动按钮 进行 隐藏 与 显示 的 动画
+        float transY = 0;
+        float rotation = 0;
+
+        if(Objects.equals(newTab.extra,R.string.title_home)){
+            // 主界面 时 隐藏
+            transY = Ui.dipToPx(getResources(),76); // Y 轴向下为 正， 隐藏
+        }else {
+            // transY 默认为 0 则 显示
+            if(Objects.equals(newTab.extra,R.string.title_group)) {
+                mAction.setImageResource(R.drawable.ic_group_add);
+                rotation = -360;
+            }else {
+                mAction.setImageResource(R.drawable.ic_contact_add);
+                rotation = 360;
+            }
+        }
+
+        // 开始动画
+        mAction.animate()
+                .rotation(rotation) // 旋转
+                .translationY(transY) // Y 轴位移
+                .setInterpolator(new AnticipateOvershootInterpolator(1)) // 有点弹性效果的
+                .setDuration(480) // 480ms
+                .start();
     }
 }

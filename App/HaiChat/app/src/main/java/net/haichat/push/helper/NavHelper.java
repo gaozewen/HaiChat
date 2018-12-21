@@ -20,18 +20,18 @@ public class NavHelper<T> {
 
     // 用户初始化的 必要参数
     private final Context context; // F 若通过 clazz 去创建 还需要一个 context
-    private final FragmentManager fragmentManager;
     private final int containerId; // 存放 F 的 容器 id
+    private final FragmentManager fragmentManager;
     private final OnTabChangedListener<T> listener;
 
     // 当前选中的 Tab
     private Tab<T> currentTab;
 
-    public NavHelper(Context context, FragmentManager fragmentManager,
-                     int containerId, OnTabChangedListener<T> listener) {
+    public NavHelper(Context context, int containerId,
+                     FragmentManager fragmentManager,OnTabChangedListener<T> listener) {
         this.context = context;
-        this.fragmentManager = fragmentManager;
         this.containerId = containerId;
+        this.fragmentManager = fragmentManager;
         this.listener = listener;
     }
 
