@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 底部导航切换后 标题栏的 3 个文字  -->
+    <string name="title_home">Active</string>
+    <string name="title_group">Group</string>
+    <string name="title_contact">Contact</string>
+</resources>
