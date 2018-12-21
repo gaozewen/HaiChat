@@ -19,6 +19,7 @@ import net.haichat.common.app.Activity;
 import net.haichat.common.widget.PortraitView;
 import net.haichat.push.frags.main.ActiveFragment;
 import net.haichat.push.frags.main.GroupFragment;
+import net.haichat.push.helper.NavHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,6 +42,8 @@ public class MainActivity extends Activity
     @BindView(R.id.navigation)
     BottomNavigationView mNavigation; // 底部导航栏
 
+    private NavHelper mNavHelper; // 工具类变量
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;
@@ -49,6 +52,12 @@ public class MainActivity extends Activity
     @Override
     protected void initWidget() {
         super.initWidget();
+
+        // 初始化 BottomNavigation 工具类
+        mNavHelper = new NavHelper();
+
+        // 设置 BottomNavigation 切换事件监听
+        mNavigation.setOnNavigationItemSelectedListener(this);
 
         // 设置 appbar 背景图片
         Glide.with(this)
@@ -62,9 +71,6 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
-
-        // 设置 BottomNavigation 切换事件监听
-        mNavigation.setOnNavigationItemSelectedListener(this);
     }
 
     /**
@@ -89,49 +95,11 @@ public class MainActivity extends Activity
      * 实现 底部导航栏 切换监听
      *
      * @param menuItem
-     * @return
+     * @return true 能够处理，且处理了 false 不能处理，且未处理
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        // 内容部分变更(需要建立 3 个 Fragment)
-        if(menuItem.getItemId() == R.id.action_home){
-            mTitle.setText(R.string.action_home); // 使用 lang 包下的 values
-
-            ActiveFragment activeFragment = new ActiveFragment();
-
-            if(isFirst){
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.lay_container,activeFragment)
-                        .commit();
-                isFirst = false;
-            }else {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.lay_container,activeFragment)
-                        .commit();
-            }
-        }else {
-            mTitle.setText(R.string.action_group); // 使用 lang 包下的 values
-
-            GroupFragment groupFragment = new GroupFragment();
-            if(isFirst){
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.lay_container,groupFragment)
-                        .commit();
-            }else{
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.lay_container,groupFragment)
-                        .commit();
-            }
-        }
-
-        // log打印
-        Log.e("TAG","size:"+ getSupportFragmentManager().getFragments().size());
-
-        mTitle.setText(menuItem.getTitle()); // 设置 appbar title
-        return true; // 返回 true 表示正常处理
+        // 转接 事件流 到工具类中
+        return mNavHelper.performClickMenu(menuItem.getItemId()); // 返回 true 表示正常处理
     }
 }
