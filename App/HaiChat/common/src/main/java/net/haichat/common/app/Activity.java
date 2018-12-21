@@ -1,9 +1,14 @@
 package net.haichat.common.app;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.List;
 
@@ -19,6 +24,15 @@ public abstract class Activity extends AppCompatActivity {
         initWindows();
 
         if(initArgs(getIntent().getExtras())) { // 初始化数据成功
+            // 状态栏透明
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
             // 得到界面 id 并设置到 界面中
             setContentView(getContentLayoutId());
             initWidget();
