@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".frags.main.ActiveFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <net.haichat.common.widget.GalleryView
+        android:id="@+id/galleryView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/textPrimary"
-        android:text="Active" />
+        android:padding="1dp"
+        />
 
 </FrameLayout>

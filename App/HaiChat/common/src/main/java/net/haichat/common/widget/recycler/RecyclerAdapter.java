@@ -190,12 +190,21 @@ public abstract class RecyclerAdapter<Data>
     }
 
     /**
-     * 设置 适配器的 监听器
-     *
-     * @param adapterListener
+     * 实现 AdapterCallback<Data>这个接口
+     * @param data
+     * @param holder
      */
-    public void setListener(AdapterListener<Data> adapterListener) {
-        this.mListener = adapterListener;
+    @Override
+    public void update(Data data, ViewHolder<Data> holder) {
+        // 得到当前 ViewHolder 的坐标
+        int pos = holder.getAdapterPosition();
+        if(pos >= 0){
+            // 进行数据的移除与更新
+            mDataList.remove(pos);
+            mDataList.add(pos,data);
+            // 通知这个坐标下的数据有更新
+            notifyItemChanged(pos);  // ==> 会调用 onBindViewHolder()
+        }
     }
 
     /**
@@ -235,6 +244,15 @@ public abstract class RecyclerAdapter<Data>
     }
 
     /**
+     * 设置 适配器的 监听器
+     *
+     * @param adapterListener
+     */
+    public void setListener(AdapterListener<Data> adapterListener) {
+        this.mListener = adapterListener;
+    }
+
+    /**
      * 我们的自定义监听器
      *
      * @param <Data> 泛型
@@ -245,6 +263,23 @@ public abstract class RecyclerAdapter<Data>
 
         // 当 Cell 长按时触发
         void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
+    }
+
+    /**
+     * 对 自定义监听器 做一次实现
+     * @param <Data>
+     */
+    public static abstract class AdapterListenerImpl<Data> implements AdapterListener<Data>{
+
+        @Override
+        public void onItemClick(ViewHolder holder, Data data) {
+
+        }
+
+        @Override
+        public void onItemLongClick(ViewHolder holder, Data data) {
+
+        }
     }
 
     /**
