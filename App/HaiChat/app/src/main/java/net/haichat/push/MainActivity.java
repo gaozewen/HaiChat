@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import net.haichat.common.app.Activity;
 import net.haichat.common.widget.PortraitView;
+import net.haichat.push.activities.AccountActivity;
 import net.haichat.push.frags.main.ActiveFragment;
 import net.haichat.push.frags.main.ContactFragment;
 import net.haichat.push.frags.main.GroupFragment;
@@ -126,7 +127,7 @@ public class MainActivity extends Activity
      */
     @OnClick(R.id.btn_action)
     void onActionClick() {
-
+        AccountActivity.show(this);
     }
 
     boolean isFirst = true; // 第一次添加，不需要移除原来的 Fragment

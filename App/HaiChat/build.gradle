@@ -23,6 +23,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -42,7 +43,10 @@ ext {
     butterknifeVersion = '9.0.0-rc2'
 
     geniusVersion = '2.0.0'
+    // 图片处理框架
     glideVersion = '3.7.0'
+    // 圆形头像
     circleimageviewVersion = '2.1.0'
-
+    // 图片剪切框架
+    ucropVersion = "2.2.2-native"
 }

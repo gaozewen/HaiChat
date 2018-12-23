@@ -33,6 +33,8 @@
         <item name="android:windowBackground">@color/windowsBackgroundLight</item>
     </style>
 
+    <style name="AppTheme.Account" parent="AppTheme.TransStatusBar" />
+
     <!-- 覆写了 support 包中的 字体 和 颜色大小 -->
     <!-- 这样定义全局字体大小 和 颜色，利于后期维护 -->
     <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Title">
