@@ -51,6 +51,10 @@ public class UpdateInfoFragment extends Fragment {
                         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
                         // 设置压缩后的图片精度
                         options.setCompressionQuality(96);
+                        // 设置组件颜色
+                        options.setStatusBarColor(0x801572FC);
+                        options.setToolbarColor(0x801572FC);
+                        options.setActiveWidgetColor(0x801572FC);
                         // 获取头像缓存地址
                         File cachePath = Application.getPortraitTmpFile();
                         // 打开 UCrop 裁剪框架的 Activity
