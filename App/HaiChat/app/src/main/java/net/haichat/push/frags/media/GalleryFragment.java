@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import net.haichat.common.tools.UiTool;
 import net.haichat.common.widget.GalleryView;
 import net.haichat.push.R;
 import net.qiujuer.genius.ui.Ui;
@@ -108,10 +109,10 @@ public class GalleryFragment extends BottomSheetDialogFragment
             final Window window = getWindow();
             if (window == null) return;
             // 屏幕高度
-            int screenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
+            int screenHeight = UiTool.getScreenHeight(getOwnerActivity());
             // 状态栏高度
-            int statusHeight = (int) Ui.dipToPx(getContext().getResources(), 25);
-            // 对话框高度
+            int statusHeight = UiTool.getStatusBarHeight(getOwnerActivity());
+            // 计算 dialog 的高度并设置
             int dialogHeight = screenHeight - statusHeight;
 
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
