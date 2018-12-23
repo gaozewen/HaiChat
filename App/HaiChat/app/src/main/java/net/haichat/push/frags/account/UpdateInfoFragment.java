@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.yalantis.ucrop.UCrop;
@@ -11,6 +12,8 @@ import com.yalantis.ucrop.UCrop;
 import net.haichat.common.app.Application;
 import net.haichat.common.app.Fragment;
 import net.haichat.common.widget.PortraitView;
+import net.haichat.factory.Factory;
+import net.haichat.factory.net.UploadHelper;
 import net.haichat.push.R;
 import net.haichat.push.frags.media.GalleryFragment;
 
@@ -97,5 +100,17 @@ public class UpdateInfoFragment extends Fragment {
                 .asBitmap()
                 .centerCrop()
                 .into(mPortrait);
+
+        // 获取 本地文件地址
+        String localPath = uri.getPath();
+        Log.e("gzw","localPath: "+localPath);
+
+        Factory.runOnAsync(new Runnable() {
+            @Override
+            public void run() {
+                String url = UploadHelper.uploadPortrait(localPath);
+                Log.e("gzw","callbackUrl: "+url);
+            }
+        });
     }
 }
