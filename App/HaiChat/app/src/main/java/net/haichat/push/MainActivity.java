@@ -1,6 +1,7 @@
 package net.haichat.push;
 
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -63,6 +64,21 @@ public class MainActivity extends Activity
     protected void initWidget() {
         super.initWidget();
 
+        performCodeWithPermission("获取读写权限", new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        System.out.println("gzw success");
+                    }
+
+                    @Override
+                    public void noPermission() {
+                        System.out.println("gzw fail");
+
+                    }
+                },
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         // 初始化 BottomNavigation 工具类
         mNavHelper = new NavHelper<>(this, R.id.lay_container, getSupportFragmentManager(), this);
         mNavHelper
@@ -94,7 +110,7 @@ public class MainActivity extends Activity
         // 从底部导航中接管我们的 Menu，然后 进行手动额触发第一次点击
         Menu menu = mNavigation.getMenu();
         // 触发首次选中 Home，即相当于 触发 下面的 onNavigationItemSelected 方法
-        menu.performIdentifierAction(R.id.action_home,0);
+        menu.performIdentifierAction(R.id.action_home, 0);
     }
 
     /**
@@ -142,15 +158,15 @@ public class MainActivity extends Activity
         float transY = 0;
         float rotation = 0;
 
-        if(Objects.equals(newTab.extra,R.string.title_home)){
+        if (Objects.equals(newTab.extra, R.string.title_home)) {
             // 主界面 时 隐藏
-            transY = Ui.dipToPx(getResources(),76); // Y 轴向下为 正， 隐藏
-        }else {
+            transY = Ui.dipToPx(getResources(), 76); // Y 轴向下为 正， 隐藏
+        } else {
             // transY 默认为 0 则 显示
-            if(Objects.equals(newTab.extra,R.string.title_group)) {
+            if (Objects.equals(newTab.extra, R.string.title_group)) {
                 mAction.setImageResource(R.drawable.ic_group_add);
                 rotation = -360;
-            }else {
+            } else {
                 mAction.setImageResource(R.drawable.ic_contact_add);
                 rotation = 360;
             }
