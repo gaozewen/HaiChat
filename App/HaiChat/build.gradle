@@ -49,4 +49,7 @@ ext {
     circleimageviewVersion = '2.1.0'
     // 图片剪切框架
     ucropVersion = "2.2.2-native"
+    // https://github.com/googlesamples/easypermissions
+    easyPMVersion = "2.0.0"
+    ossVersion = '+'
 }
