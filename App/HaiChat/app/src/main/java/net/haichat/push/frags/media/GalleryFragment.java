@@ -88,7 +88,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     }
 
     // 透明状态栏的 Dialog
-    private static class TransStatusBottomSheetDialog extends BottomSheetDialog {
+    public static class TransStatusBottomSheetDialog extends BottomSheetDialog {
 
         public TransStatusBottomSheetDialog(@NonNull Context context) {
             super(context);

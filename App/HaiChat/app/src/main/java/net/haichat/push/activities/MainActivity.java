@@ -1,7 +1,9 @@
-package net.haichat.push;
+package net.haichat.push.activities;
 
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -19,7 +21,9 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import net.haichat.common.app.Activity;
 import net.haichat.common.widget.PortraitView;
+import net.haichat.push.R;
 import net.haichat.push.activities.AccountActivity;
+import net.haichat.push.frags.assist.PermissionsFragment;
 import net.haichat.push.frags.main.ActiveFragment;
 import net.haichat.push.frags.main.ContactFragment;
 import net.haichat.push.frags.main.GroupFragment;
@@ -56,6 +60,14 @@ public class MainActivity extends Activity
 
     private NavHelper<Integer> mNavHelper; // 工具类变量
 
+    /**
+     * MainActivity 显示的入口
+     * @param context
+     */
+    public static void show(Context context){
+        context.startActivity(new Intent(context,MainActivity.class));
+    }
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;
@@ -64,21 +76,6 @@ public class MainActivity extends Activity
     @Override
     protected void initWidget() {
         super.initWidget();
-
-        performCodeWithPermission("获取读写权限", new PermissionCallback() {
-                    @Override
-                    public void hasPermission() {
-                        System.out.println("gzw success");
-                    }
-
-                    @Override
-                    public void noPermission() {
-                        System.out.println("gzw fail");
-
-                    }
-                },
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         // 初始化 BottomNavigation 工具类
         mNavHelper = new NavHelper<>(this, R.id.lay_container, getSupportFragmentManager(), this);
@@ -102,6 +99,7 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
+
     }
 
     @Override
