@@ -30,7 +30,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class PermissionsFragment extends BottomSheetDialogFragment
         implements EasyPermissions.PermissionCallbacks {
 
-    private PermissionsFragment instance;
 
     public PermissionsFragment() {
         // Required empty public constructor
@@ -136,6 +135,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
      */
     public static boolean haveAll(Context context, FragmentManager manager) {
         // 检查是否具有所有的权限
+        // 如果没有则显示当前申请权限的界面
         return haveNetworkPerm(context)
                 && haveReadPerm(context)
                 && haveWritePerm(context)
@@ -149,8 +149,9 @@ public class PermissionsFragment extends BottomSheetDialogFragment
      */
     public static void show(FragmentManager manager) {
         // 调用 BottomSheetDialogFragment 已经准备好的 显示方法
-        new PermissionsFragment()
-                .show(manager, PermissionsFragment.class.getName());
+        PermissionsFragment permissionsFragment = new PermissionsFragment();
+        permissionsFragment.setCancelable(false);
+        permissionsFragment.show(manager, PermissionsFragment.class.getName());
     }
 
     // 权限回调的标识
