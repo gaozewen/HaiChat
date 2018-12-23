@@ -9,8 +9,9 @@
         android:id="@+id/im_portrait"
         android:layout_width="@dimen/portraitMaxSize"
         android:layout_height="@dimen/portraitMaxSize"
-        android:scaleType="centerCrop"
         android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@color/colorAccent"
         />
 
 </FrameLayout>

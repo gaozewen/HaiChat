@@ -4,7 +4,7 @@
     <style name="AppTheme.Base" parent="Theme.private">
         <item name="android:elevation">0dp</item>
         <item name="android:outlineProvider">none</item>
-
+        <!--设置底部导航颜色-->
         <item name="android:navigationBarColor">@color/white_alpha_16</item>
     </style>
 </resources>
