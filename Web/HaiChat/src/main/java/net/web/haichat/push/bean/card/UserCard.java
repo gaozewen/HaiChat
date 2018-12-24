@@ -1,6 +1,7 @@
 package net.web.haichat.push.bean.card;
 
 import com.google.gson.annotations.Expose;
+import net.web.haichat.push.bean.db.User;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +29,25 @@ public class UserCard {
     private boolean isFollowed; // 我 与 当前 User 的关系状态 ,是否 已经关注 当前 User
     @Expose
     private LocalDateTime modifyAt; // 用户信息 最后的更新时间
+
+    public UserCard(final User user) {
+        this(user, false);
+    }
+
+    public UserCard(final User user,boolean isFollowed){
+        this.isFollowed = isFollowed;
+
+        this.id = user.getId();
+        this.name = user.getName();
+        this.phone = user.getPhone();
+        this.portrait = user.getPortrait();
+        this.desc = user.getDescription();
+        this.sex = user.getSex();
+        this.modifyAt = user.getUpdateAt();
+
+        // todo: 获取 我关注的人的数量  和 被关注的数量
+        // user.getFollowers().size() 懒加载会报错，因为没有 Session
+    }
 
     public String getId() {
         return id;
