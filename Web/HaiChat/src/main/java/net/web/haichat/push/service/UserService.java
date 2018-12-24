@@ -15,27 +15,21 @@ import javax.ws.rs.core.MediaType;
  * 用户信息处理的 Service
  */
 @Path("/user")
-public class UserService {
+public class UserService extends BaseService {
 
     // 修改 用户自己 的 信息
     @PUT
     @Path("/updateInfo")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseModel<UserCard> update(
-            @HeaderParam("token") String token, UpdateInfoModel model
-    ) {
-        if(Strings.isNullOrEmpty(token) || !UpdateInfoModel.check(model))
-            return ResponseModel.buildParameterError();
+    public ResponseModel<UserCard> update(UpdateInfoModel model) {
+        if (!UpdateInfoModel.check(model)) return ResponseModel.buildParameterError();
 
-        User user = UserFactory.findByToken(token);
-        // token 失效
-        if(user == null) return ResponseModel.buildAccountError();
-        // 更新用户信息
-        user = model.updateToUser(user);
-        // 同步到数据库
-        user = UserFactory.update(user);
-        return ResponseModel.buildOk(new UserCard(user,true)); // 自己肯定已经关注自己
+        User user = getSelf(); // 获取 自己的 用户信息
+        user = model.updateToUser(user); // 更新用户信息
+        user = UserFactory.update(user); // 同步到数据库
+
+        return ResponseModel.buildOk(new UserCard(user, true)); // 自己肯定已经关注自己
     }
 
 }

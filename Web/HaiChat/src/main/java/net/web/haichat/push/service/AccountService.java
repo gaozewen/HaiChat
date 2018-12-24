@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 // 127.0.0.1/api/account/...
 @Path("/account")
-public class AccountService {
+public class AccountService extends BaseService {
     // 注册
     @POST
     @Path("/register")
@@ -64,19 +64,12 @@ public class AccountService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseModel<AccountRespModel> bind(
-            @HeaderParam("token") String token, // 从 请求头 中获取 token 字段
+//            @HeaderParam("token") String token, // 从 请求头 中获取 token 字段
             @PathParam("pushId") String pushId // 从 url 地址中 获取
     ) {
-        // 参数校验
-        if (Strings.isNullOrEmpty(token) || Strings.isNullOrEmpty(pushId))
-            return ResponseModel.buildParameterError();
 
-        User user = UserFactory.findByToken(token);
-        // token 失效，用户查不到，返回 账户异常
-        if (user == null) return ResponseModel.buildAccountError();
-
-        // 进入 绑定 方法
-        return bind(user, pushId);
+        if (Strings.isNullOrEmpty(pushId)) return ResponseModel.buildParameterError();
+        return bind(getSelf(), pushId); // 进入 绑定 方法
     }
 
     private ResponseModel<AccountRespModel> bind(User user, String pushId) {
