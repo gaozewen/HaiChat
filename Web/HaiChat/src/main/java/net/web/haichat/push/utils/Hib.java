@@ -68,13 +68,13 @@ public class Hib {
     }
     // 用于 用户实际操作的 一个接口
     // 具有 返回值 T
-    public interface Query<T> {
-        T query(Session session);
+    public interface Handler<T> {
+        T execute(Session session);
     }
 
     // 简化 Session 操作的 工具方法
     // 具有一个返回值
-    public static<T> T query(Query<T> query){
+    public static<T> T execute(Handler<T> handler){
         // 重开一个 session
         Session session = sessionFactory.openSession();
         // 开启事务
@@ -83,7 +83,7 @@ public class Hib {
         T t = null;
         try{
             // 调用 传递进来的接口，并调用接口的方法把 session 传递进去
-            t = query.query(session);
+            t = handler.execute(session);
             transaction.commit(); // 提交
         }catch (Exception e){
             e.printStackTrace();

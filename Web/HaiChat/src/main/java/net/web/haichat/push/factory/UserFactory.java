@@ -3,24 +3,13 @@ package net.web.haichat.push.factory;
 import net.web.haichat.push.bean.db.User;
 import net.web.haichat.push.utils.Hib;
 import net.web.haichat.push.utils.TextUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import java.util.UUID;
+
+/**
+ * 用户相关 业务逻辑
+ */
 public class UserFactory {
-
-    public static User findByPhone(String phone) {
-        return Hib.query(session -> (User) session
-                .createQuery("from User where phone =:phone")
-                .setParameter("phone", phone)
-                .uniqueResult());
-    }
-
-    public static User findByName(String name) {
-        return Hib.query(session -> (User) session
-                .createQuery("from User where name =:name")
-                .setParameter("name", name)
-                .uniqueResult());
-    }
 
     /**
      * 用户注册
@@ -32,33 +21,107 @@ public class UserFactory {
      * @return User
      */
     public static User register(String account, String password, String name) {
-        account = account.trim(); // 去除账户中的首尾空格
-        password = encodePassword(password); // 将密码转换成密文
+        // 创建用户
+        User user = createUser(account, password, name);
+        // 用户创建成功，刷新 token
+        if (user != null) user = refreshToken(user);
 
-        User user = new User();
-
-        user.setName(name);
-        user.setPassword(password);
-        user.setPhone(account); // 账户就是手机号
-
-        // 进行数据库操作
-        Session session = Hib.session();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.save(user);
-            transaction.commit();
-            return user;
-        } catch (Exception e) {
-            transaction.rollback(); // 失败回滚
-            return null;
-        }
+        return user;
     }
 
+    /**
+     * 用户登录
+     * 使用账户 和 密码进行登录
+     *
+     * @param account 用户手机号
+     * @param password 密码
+     * @return
+     */
+    public static User login(String account, String password) {
+        String queryAccount = account.trim();
+        String queryPassword = encodePassword(password);
+        // 查询用户是否存在
+        User user = Hib.execute(session -> (User) session
+                .createQuery("from User where phone=:account and password=:password")
+                .setParameter("account", queryAccount)
+                .setParameter("password", queryPassword)
+                .uniqueResult());
+        // 用户存在 刷新 token
+        if(user != null) user = refreshToken(user);
+        return user;
+    }
+
+
+    // 通过 Phone 找到 User
+    public static User findByPhone(String phone) {
+        return Hib.execute(session -> (User) session
+                .createQuery("from User where phone =:phone")
+                .setParameter("phone", phone)
+                .uniqueResult());
+    }
+
+    // 通过 Name 找到 User
+    public static User findByName(String name) {
+        return Hib.execute(session -> (User) session
+                .createQuery("from User where name =:name")
+                .setParameter("name", name)
+                .uniqueResult());
+    }
+
+    // 通过 Token 找到 User
+    // 只能自己使用，查询的是个人信息，非他人信息
+    public static User findByToken(String token) {
+        return Hib.execute(session -> (User) session
+                .createQuery("from User where token =:token")
+                .setParameter("token", token)
+                .uniqueResult());
+    }
+
+    /**
+     * 对密码进行加密操作
+     *
+     * @param password 明文
+     * @return String 密文
+     */
     private static String encodePassword(String password) {
         // 进行 MD5 非对称加密，加盐会更安全，盐也要存储
         password = TextUtil.getMD5(password.trim());
         // 再进行 一次 对称 的 Base64 加密，当然可以采取加盐的方案
         return TextUtil.encodeBase64(password);
     }
+
+    /**
+     * 注册部分新建用户逻辑
+     *
+     * @param account  手机号
+     * @param password 密码(明文)
+     * @param name     用户名
+     * @return User
+     */
+    private static User createUser(String account, String password, String name) {
+        User user = new User();
+        user.setName(name);
+        user.setPassword(encodePassword(password)); // 将密码转换成密文
+        user.setPhone(account.trim()); // 去除账户中的首尾空格 账户就是手机号
+        // 数据库存储
+        return Hib.execute(session -> (User) session.save(user));
+    }
+
+    /**
+     * 更新 token 用于
+     *
+     * @param user User
+     * @return User
+     */
+    private static User refreshToken(User user) {
+        String newToken = UUID.randomUUID().toString(); // 使用 随机的 UUID 值 充当 token
+        newToken = TextUtil.encodeBase64(newToken); // 进行 Base64 格式化
+        user.setToken(newToken); // 为 token 赋予新值
+        return Hib.execute(session -> {
+            session.saveOrUpdate(user);
+            return user;
+        });
+    }
+
 
 }

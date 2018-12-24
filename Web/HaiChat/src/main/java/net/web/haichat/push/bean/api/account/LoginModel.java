@@ -3,23 +3,20 @@ package net.web.haichat.push.bean.api.account;
 import com.google.common.base.Strings;
 import com.google.gson.annotations.Expose;
 
-public class RegisterModel {
+public class LoginModel {
 
     @Expose
     private String account;
     @Expose
     private String password;
-    @Expose
-    private String name;
 
     /**
      * 校验接收参数
      */
-    public static boolean check(RegisterModel model) {
+    public static boolean check(LoginModel model) {
         return model != null
                 && !Strings.isNullOrEmpty(model.account)
-                && !Strings.isNullOrEmpty(model.password)
-                && !Strings.isNullOrEmpty(model.name);
+                && !Strings.isNullOrEmpty(model.password);
     }
 
     public String getAccount() {
@@ -38,11 +35,4 @@ public class RegisterModel {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
