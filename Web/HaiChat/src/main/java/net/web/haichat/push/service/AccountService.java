@@ -1,8 +1,5 @@
 package net.web.haichat.push.service;
 
-import net.web.haichat.push.bean.User;
-
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
