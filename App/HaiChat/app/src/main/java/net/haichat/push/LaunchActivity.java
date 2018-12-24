@@ -17,24 +17,24 @@ public class LaunchActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(PermissionsFragment.haveAll(this,getSupportFragmentManager())){
+        /*if(PermissionsFragment.haveAll(this,getSupportFragmentManager())){
             MainActivity.show(this);
             finish();// 跳转之后销毁此界面，这样 就不能再 back 到此界面了
         }else {
             PermissionsFragment.show(getSupportFragmentManager());
-        }
+        }*/
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(PermissionsFragment.haveAll(this,getSupportFragmentManager())){
+        /*if(PermissionsFragment.haveAll(this,getSupportFragmentManager())){
             MainActivity.show(this);
             finish();// 跳转之后销毁此界面，这样 就不能再 back 到此界面了
-        }
+        }*/
 
-        /*performCodeWithPermission("获取应用所需权限", new PermissionCallback() {
+        performCodeWithPermission("获取应用所需权限", new PermissionCallback() {
                     @Override
                     public void hasPermission() {
                         MainActivity.show(LaunchActivity.this);
@@ -54,7 +54,7 @@ public class LaunchActivity extends Activity {
                 Manifest.permission.ACCESS_WIFI_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO);*/
+                Manifest.permission.RECORD_AUDIO);
     }
 
 }

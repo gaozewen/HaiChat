@@ -1,4 +1,4 @@
-package net.haichat.push.frags.account;
+package net.haichat.push.frags.user;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
