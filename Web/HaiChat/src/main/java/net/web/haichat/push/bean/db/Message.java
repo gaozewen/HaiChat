@@ -28,7 +28,7 @@ public class Message {
     @Column(updatable = false, nullable = false)
     private String id;
 
-    @Column(nullable = false,columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column
@@ -36,6 +36,14 @@ public class Message {
 
     @Column(nullable = false)
     private int type; // 消息类型
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime createAt = LocalDateTime.now();
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updateAt = LocalDateTime.now();
 
     // 发送者
     // 多个消息 对应 一个发送者
@@ -45,7 +53,7 @@ public class Message {
     private User sender;
     // 这个字段 仅仅 只是为了 对应 sender 的数据库字段 senderId
     // 不允许手动的更新或者插入，只能通过 sender 来进行更新
-    @Column(updatable = false,insertable = false)
+    @Column(nullable = false, updatable = false, insertable = false)
     private String senderId;
 
     // 接收者可为空
@@ -53,16 +61,15 @@ public class Message {
     @JoinColumn(name = "receiverId")
     @ManyToOne // 可选，即可为空，因为 接收者可以是 群组
     private User receiver;
-    @Column(updatable = false,insertable = false)
+    @Column(updatable = false, insertable = false)
     private String receiverId;
 
-    @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime createAt = LocalDateTime.now();
-
-    @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime updateAt = LocalDateTime.now();
+    // 一个群可以接收多个消息
+    @ManyToOne
+    @JoinColumn(name = "groupId")
+    private Group group;
+    @Column(updatable = false, insertable = false)
+    private String groupId;
 
     public String getId() {
         return id;
@@ -94,6 +101,22 @@ public class Message {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+    }
+
+    public LocalDateTime getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
     }
 
     public User getSender() {
@@ -128,19 +151,19 @@ public class Message {
         this.receiverId = receiverId;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }
