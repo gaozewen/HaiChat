@@ -3,8 +3,6 @@ package net.haichat.push.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -20,7 +18,6 @@ import net.haichat.push.R;
 import net.haichat.push.frags.account.AccountTrigger;
 import net.haichat.push.frags.account.LoginFragment;
 import net.haichat.push.frags.account.RegisterFragment;
-import net.qiujuer.genius.ui.compat.UiCompat;
 
 import butterknife.BindView;
 
@@ -61,9 +58,15 @@ public class AccountActivity extends Activity
 
         // 初始化背景
         Glide.with(this)
-                .load(R.drawable.bg_src_tianjin)
+                .load(R.drawable.bg_src_hai)
                 .centerCrop()
                 .into(new ViewTarget<ImageView, GlideDrawable>(mBg) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        this.view.setImageDrawable(DrawableCompat.wrap(resource.getCurrent()));
+                    }
+                });
+                /*.into(new ViewTarget<ImageView, GlideDrawable>(mBg) {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                         // 获取 glide 的 Drawable
@@ -77,7 +80,7 @@ public class AccountActivity extends Activity
                         );
                         this.view.setImageDrawable(drawable);
                     }
-                });
+                });*/
     }
 
     // Activity 中受到裁剪图片成功的回调
