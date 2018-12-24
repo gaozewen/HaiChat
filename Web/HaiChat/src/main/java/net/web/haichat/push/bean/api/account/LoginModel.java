@@ -9,6 +9,8 @@ public class LoginModel {
     private String account;
     @Expose
     private String password;
+    @Expose
+    private String pushId;
 
     /**
      * 校验接收参数
@@ -35,4 +37,11 @@ public class LoginModel {
         this.password = password;
     }
 
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 }

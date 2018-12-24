@@ -11,6 +11,8 @@ public class RegisterModel {
     private String password;
     @Expose
     private String name;
+    @Expose
+    private String pushId;
 
     /**
      * 校验接收参数
@@ -44,5 +46,13 @@ public class RegisterModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 }
