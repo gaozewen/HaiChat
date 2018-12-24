@@ -3,6 +3,7 @@ package net.web.haichat.push.service;
 import net.web.haichat.push.bean.api.account.RegisterModel;
 import net.web.haichat.push.bean.card.UserCard;
 import net.web.haichat.push.bean.db.User;
+import net.web.haichat.push.factory.UserFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,9 +34,19 @@ public class AccountService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public UserCard register(RegisterModel model) {
-        UserCard card = new UserCard();
-        card.setName(model.getName());
-        card.setFollowed(true);
-        return card;
+        // 进行数据库 保存 操作
+        User user = UserFactory.register(model.getAccount(), model.getPassword(), model.getName());
+
+        if (user != null){
+            UserCard card = new UserCard();
+            card.setName(user.getName());
+            card.setPhone(user.getPhone());
+            card.setSex(user.getSex());
+            card.setFollowed(true);
+            card.setModifyAt(user.getUpdateAt());
+            return card;
+        }
+
+        return null;
     }
 }
