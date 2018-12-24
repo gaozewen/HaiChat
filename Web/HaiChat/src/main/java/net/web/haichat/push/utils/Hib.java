@@ -62,4 +62,40 @@ public class Hib {
             sessionFactory.close();
         }
     }
+
+    public interface QueryOnly {
+        void query(Session session);
+    }
+    // 用于 用户实际操作的 一个接口
+    // 具有 返回值 T
+    public interface Query<T> {
+        T query(Session session);
+    }
+
+    // 简化 Session 操作的 工具方法
+    // 具有一个返回值
+    public static<T> T query(Query<T> query){
+        // 重开一个 session
+        Session session = sessionFactory.openSession();
+        // 开启事务
+        Transaction transaction = session.beginTransaction();
+
+        T t = null;
+        try{
+            // 调用 传递进来的接口，并调用接口的方法把 session 传递进去
+            t = query.query(session);
+            transaction.commit(); // 提交
+        }catch (Exception e){
+            e.printStackTrace();
+            try{
+                transaction.rollback(); // 回滚
+            }catch (RuntimeException re){
+                re.printStackTrace();
+            }
+        }finally {
+            // 无论成功失败，都要关闭 Session
+            session.close();
+        }
+        return t;
+    }
 }

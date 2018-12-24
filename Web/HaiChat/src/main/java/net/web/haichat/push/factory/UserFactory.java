@@ -8,15 +8,30 @@ import org.hibernate.Transaction;
 
 public class UserFactory {
 
+    public static User findByPhone(String phone) {
+        return Hib.query(session -> (User) session
+                .createQuery("from User where phone =:phone")
+                .setParameter("phone", phone)
+                .uniqueResult());
+    }
+
+    public static User findByName(String name) {
+        return Hib.query(session -> (User) session
+                .createQuery("from User where name =:name")
+                .setParameter("name", name)
+                .uniqueResult());
+    }
+
     /**
      * 用户注册
      * 注册的操作需要写入数据库，并返回数据库中的 User 信息
-     * @param account 账户
+     *
+     * @param account  账户
      * @param password 密码
-     * @param name 用户名
+     * @param name     用户名
      * @return User
      */
-    public static User register(String account,String password,String name){
+    public static User register(String account, String password, String name) {
         account = account.trim(); // 去除账户中的首尾空格
         password = encodePassword(password); // 将密码转换成密文
 
@@ -33,13 +48,13 @@ public class UserFactory {
             session.save(user);
             transaction.commit();
             return user;
-        }catch (Exception e){
+        } catch (Exception e) {
             transaction.rollback(); // 失败回滚
             return null;
         }
     }
 
-    private static String encodePassword(String password){
+    private static String encodePassword(String password) {
         // 进行 MD5 非对称加密，加盐会更安全，盐也要存储
         password = TextUtil.getMD5(password.trim());
         // 再进行 一次 对称 的 Base64 加密，当然可以采取加盐的方案

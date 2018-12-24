@@ -34,8 +34,23 @@ public class AccountService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public UserCard register(RegisterModel model) {
+
+        User user = UserFactory.findByPhone(model.getAccount().trim());
+        if(user!= null){
+            UserCard card = new UserCard();
+            card.setName("手机号已存在");
+            return card;
+        }
+
+        user = UserFactory.findByName(model.getName().trim());
+        if(user!= null){
+            UserCard card = new UserCard();
+            card.setName("用户名已经存在");
+            return card;
+        }
+
         // 进行数据库 保存 操作
-        User user = UserFactory.register(model.getAccount(), model.getPassword(), model.getName());
+        user = UserFactory.register(model.getAccount(), model.getPassword(), model.getName());
 
         if (user != null){
             UserCard card = new UserCard();
