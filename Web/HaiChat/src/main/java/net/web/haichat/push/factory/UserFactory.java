@@ -90,12 +90,20 @@ public class UserFactory {
 
         // 更新 新的 设备id
         user.setPushId(pushId);
+        return update(user);
+    }
+
+    /**
+     * 更新用户信息 到 数据库
+     * @param user User
+     * @return User
+     */
+    public static User update(User user){
         return Hib.execute(session -> {
             session.saveOrUpdate(user);
             return user;
         });
     }
-
 
     // 通过 Phone 找到 User
     public static User findByPhone(String phone) {
@@ -162,10 +170,7 @@ public class UserFactory {
         String newToken = UUID.randomUUID().toString(); // 使用 随机的 UUID 值 充当 token
         newToken = TextUtil.encodeBase64(newToken); // 进行 Base64 格式化
         user.setToken(newToken); // 为 token 赋予新值
-        return Hib.execute(session -> {
-            session.saveOrUpdate(user);
-            return user;
-        });
+        return update(user);
     }
 
 
