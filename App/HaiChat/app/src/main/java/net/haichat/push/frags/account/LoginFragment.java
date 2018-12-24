@@ -27,4 +27,9 @@ public class LoginFragment extends Fragment {
         return R.layout.fragment_login;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAccountTrigger.toggleView();
+    }
 }

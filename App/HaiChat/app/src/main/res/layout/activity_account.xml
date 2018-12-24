@@ -7,9 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".activities.AccountActivity">
 
+    <!-- android:foreground="@color/maskChatHeader" 这是一个遮罩 -->
     <ImageView
+        android:id="@+id/im_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:foreground="@color/maskChatHeader"
         />
 
     <FrameLayout
