@@ -10,10 +10,11 @@ import net.haichat.factory.Factory;
  */
 public class Account {
 
-    private static final String KEY_PUSH_ID = "KEY_PUSH_ID";
+    private static final String KEY_PUSH_ID = "KEY_PUSH_ID"; // sp 存储时的 key
+    private static final String KEY_IS_BIND = "KEY_IS_BIND";
 
-    // 设备的推送id (设备号)
-    private static String pushId;
+    private static String pushId; // 设备的推送id (设备号)
+    private static boolean isBind; // PushId 是否已经绑定到了服务器
 
 
     /**
@@ -23,7 +24,7 @@ public class Account {
      */
     public static boolean isLogin() {
         // TODO: 判断当前 用户 是否登录
-        return true;
+        return false;
     }
 
     /**
@@ -31,8 +32,15 @@ public class Account {
      * @return True 已绑定
      */
     public static boolean isBind() {
-        // TODO: 判断 pushId 是否绑定到服务器
-        return false;
+        return isBind;
+    }
+
+    /**
+     * 设置 绑定 状态
+     */
+    public static void setIsBind(boolean isBind){
+        Account.isBind = isBind;
+        Account.saveDataToSp(Factory.app());
     }
 
     /**
@@ -64,6 +72,7 @@ public class Account {
 
         sp.edit()
                 .putString(KEY_PUSH_ID, pushId)
+                .putBoolean(KEY_IS_BIND,isBind)
                 .apply(); // apply 异步操作 commit 同步操作
     }
 
@@ -77,7 +86,8 @@ public class Account {
                 Context.MODE_PRIVATE
         );
 
-        Account.pushId = sp.getString(KEY_PUSH_ID,"");
+        Account.pushId = sp.getString(KEY_PUSH_ID,"gzw");
+        Account.isBind = sp.getBoolean(KEY_IS_BIND,false);
     }
 
 }

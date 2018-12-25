@@ -66,7 +66,6 @@ public class LaunchActivity extends Activity {
             }
         }
 
-
         getWindow() // 循环等待
                 .getDecorView()
                 .postDelayed(this::waitSetupPushId, 500);

@@ -9,6 +9,7 @@ import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.model.db.User;
 import net.haichat.factory.net.Network;
 import net.haichat.factory.net.ApiService;
+import net.haichat.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,8 +70,8 @@ public class AccountHelper {
      * @param callback ApiCallback.Callback<User>
      */
     public static void bindPushId(final ApiCallback.Callback<User> callback){
-        // todo: 绑定 pushId 业务逻辑
-        callback.onDataNotAvailable(R.string.app_name);
+        // todo: 绑定 pushId 编写
+        Account.setIsBind(true);
     }
 
 }
