@@ -52,4 +52,7 @@ ext {
     // https://github.com/googlesamples/easypermissions
     easyPMVersion = "2.0.0"
     ossVersion = '+'
+
+    gsonVersion = '2.8.5'
+    retrofitVersion = '2.5.0'
 }

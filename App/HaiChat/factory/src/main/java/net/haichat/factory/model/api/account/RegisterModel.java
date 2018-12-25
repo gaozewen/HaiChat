@@ -1,4 +1,4 @@
-package net.haichat.factory.model.api;
+package net.haichat.factory.model.api.account;
 
 /**
  * 注册使用的请求 Model

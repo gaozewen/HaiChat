@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import net.haichat.common.Common;
 import net.haichat.factory.data.helper.AccountHelper;
-import net.haichat.factory.model.api.RegisterModel;
+import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.presenter.BasePresenter;
 
 import java.util.regex.Pattern;
