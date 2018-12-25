@@ -37,4 +37,8 @@ dependencies {
     api "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
     api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     api "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+
+    annotationProcessor "com.github.agrosner.dbflow:processor:${rootProject.ext.dbflowVersion}"
+    api "com.github.agrosner.dbflow:core:${rootProject.ext.dbflowVersion}"
+    api "com.github.agrosner.dbflow:lib:${rootProject.ext.dbflowVersion}"
 }

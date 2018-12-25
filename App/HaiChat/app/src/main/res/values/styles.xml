@@ -16,7 +16,9 @@
         <!-- 去除顶部的状态栏(状态栏沉浸式，透明) -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@null</item>
+        <!--<item name="android:windowAnimationStyle">@null</item>-->
+        <!-- Activity 换场动画 start finish 之后 跳转的 两个 activity 都使用 同样的主题才有效果 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowFrame">@null</item>
     </style>
