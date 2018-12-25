@@ -1,14 +1,14 @@
-package net.haichat.factory.data;
+package net.haichat.factory.callback;
 
 import android.support.annotation.StringRes;
 
 /**
- * 数据源接口定义
+ * Restful API 接口 请求结果回调
  */
-public interface DataSource {
+public interface ApiCallback {
 
     // 同时包含了 成功 和 失败 的 回调接口
-    interface CallBack<T> extends SucceedCallback<T>,FailedCallback{
+    interface Callback<T> extends SucceedCallback<T>,FailedCallback{
 
     }
 

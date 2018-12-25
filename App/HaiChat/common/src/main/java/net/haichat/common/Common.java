@@ -9,6 +9,8 @@ public class Common {
     public interface Constance{
         // 手机号 正则表达式, 11 位 手机号
         String REGEX_MOBILE = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+        // Restful API 地址
+        String API_URL = "http://192.168.1.104:8080/api/";
     }
 
 }

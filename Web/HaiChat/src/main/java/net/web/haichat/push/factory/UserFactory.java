@@ -138,7 +138,7 @@ public class UserFactory {
      */
     private static String encodePassword(String password) {
         // 进行 MD5 非对称加密，加盐会更安全，盐也要存储
-        password = TextUtil.getMD5(password.trim());
+        password = TextUtil.getMD5(password); // password 不能 trim() 空格也是字符 可作为密码
         // 再进行 一次 对称 的 Base64 加密，当然可以采取加盐的方案
         return TextUtil.encodeBase64(password);
     }
@@ -157,7 +157,10 @@ public class UserFactory {
         user.setPassword(encodePassword(password)); // 将密码转换成密文
         user.setPhone(account.trim()); // 去除账户中的首尾空格 账户就是手机号
         // 数据库存储
-        return Hib.execute(session -> (User) session.save(user));
+        return Hib.execute(session -> {
+            session.save(user);
+            return user;
+        });
     }
 
     /**

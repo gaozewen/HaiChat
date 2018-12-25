@@ -39,12 +39,10 @@ public class LaunchActivity extends Activity {
                     public void hasPermission() {
                         MainActivity.show(LaunchActivity.this);
                         finish();
-                        System.out.println("gzw success");
                     }
 
                     @Override
                     public void noPermission() {
-                        System.out.println("gzw fail");
                         finish();
 
                     }

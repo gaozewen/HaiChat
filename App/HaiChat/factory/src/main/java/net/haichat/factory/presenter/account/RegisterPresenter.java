@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import net.haichat.common.Common;
 import net.haichat.factory.R;
-import net.haichat.factory.data.DataSource;
-import net.haichat.factory.data.helper.AccountHelper;
+import net.haichat.factory.callback.ApiCallback;
+import net.haichat.factory.callback.helper.AccountHelper;
 import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.model.db.User;
 import net.haichat.factory.presenter.BasePresenter;
@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class RegisterPresenter
         extends BasePresenter<RegisterContract.View>
-        implements RegisterContract.Presenter, DataSource.CallBack<User> {
+        implements RegisterContract.Presenter, ApiCallback.Callback<User> {
     public RegisterPresenter(RegisterContract.View view) {
         super(view);
     }
