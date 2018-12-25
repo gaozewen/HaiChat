@@ -1,6 +1,7 @@
 package net.haichat.push.frags.account;
 
 import android.content.Context;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class RegisterFragment
     @BindView(R.id.loading)
     Loading mLoading;
     @BindView(R.id.btn_submit)
-    Loading mSubmit;
+    Button mSubmit;
     @BindView(R.id.txt_go_login)
     TextView mGoLogin;
 
