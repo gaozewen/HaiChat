@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import net.haichat.common.app.Application;
 import net.haichat.factory.callback.ApiCallback;
 import net.haichat.factory.model.api.RespModel;
+import net.haichat.factory.persistence.Account;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -35,11 +36,13 @@ public class Factory {
     }
 
     /**
-     * 收到 账户退出 的消息 需要进行账户，重新登录
+     * Factory 中的初始化操作
      */
-    private void logout() {
-
+    public static void setup(){
+        // 从 sp 中初始化 账户相关的 配置信息(pushId...)
+        Account.loadDataFromSp(app());
     }
+
 
     /**
      * 返回全局的Application
@@ -133,5 +136,22 @@ public class Factory {
     private static void decodeRespCode(@StringRes final int resId, final ApiCallback.FailedCallback failedCallback) {
         if (failedCallback != null) failedCallback.onDataNotAvailable(resId);
     }
+
+    /**
+     * 收到 账户退出 的消息 需要进行账户，重新登录
+     */
+    private void logout() {
+        // TODO: token 失效，用户强制被注销处理
+    }
+
+    /**
+     * 处理 推送来 的消息
+     * @param message 消息
+     */
+    public static void dispatchPushMessage(String message){
+        // TODO: 对接收到的推送信息 进行处理
+    }
+
+
 
 }

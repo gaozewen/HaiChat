@@ -13,6 +13,7 @@ import android.view.View;
 
 import net.haichat.common.app.Activity;
 import net.haichat.factory.persistence.Account;
+import net.haichat.push.activities.AccountActivity;
 import net.haichat.push.activities.MainActivity;
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
@@ -52,10 +53,19 @@ public class LaunchActivity extends Activity {
      * 等待 个推框架 对我们的 PushId 设置好值
      */
     private void waitSetupPushId() {
-        if (!TextUtils.isEmpty(Account.getPushId())) { // 初始化完成(以获取 pushId)
-            startAnim(1f, this::skipToMainActivity); // 在跳转之前完成剩下的 50% 动画
-            return;
+
+        if (Account.isLogin()) { // 已登录
+            if (Account.isBind()) { // 已绑定，直接跳转
+                skipToMainActivity();
+                return;
+            }
+        } else { // 未登录
+            if (!TextUtils.isEmpty(Account.getPushId())) { // 初始化完成(已获取 pushId)
+                startAnim(1f, this::skipToMainActivity); // 在跳转之前完成剩下的 50% 动画
+                return;
+            }
         }
+
 
         getWindow() // 循环等待
                 .getDecorView()
@@ -111,7 +121,11 @@ public class LaunchActivity extends Activity {
         performCodeWithPermission("获取应用所需权限", new PermissionCallback() {
                     @Override
                     public void hasPermission() {
-                        MainActivity.show(LaunchActivity.this);
+                        if (Account.isLogin()) {// 已登录 --> MainActivity
+                            MainActivity.show(LaunchActivity.this);
+                        } else { // 未登录 --> AccountActivity
+                            AccountActivity.show(LaunchActivity.this);
+                        }
                         finish();
                     }
 
