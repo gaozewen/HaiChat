@@ -2,7 +2,7 @@ package net.haichat.factory.presenter;
 
 public class BasePresenter<T extends BaseContract.View> implements BaseContract.Presenter {
 
-    protected T mView;
+    private T mView;
 
     public BasePresenter(T view) { // 当前的布局
         setView(view);
@@ -16,6 +16,7 @@ public class BasePresenter<T extends BaseContract.View> implements BaseContract.
      */
     protected void setView(T view) {
         this.mView = view;
+        this.mView.setPresenter(this);
     }
 
     /**
