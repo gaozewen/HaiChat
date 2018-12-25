@@ -15,11 +15,14 @@ android {
                 GETUI_APP_ID    : "c07EoUvXU2920QuNahPdf",
                 GETUI_APP_KEY   : "fUyZbPVKrU9P2PS4OLDJO2",
                 GETUI_APP_SECRET: "e81Qq6OjVaAyYkk8rHWVG6",
-                PACKAGE_NAME    : applicationId
         ]
 
         packagingOptions {
             exclude 'META-INF/proguard/androidx-annotations.pro'
+        }
+        // 个推 so 库 需要 CPU 架构
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
         }
 
     }

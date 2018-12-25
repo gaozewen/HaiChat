@@ -86,7 +86,7 @@ public class Account {
                 Context.MODE_PRIVATE
         );
 
-        Account.pushId = sp.getString(KEY_PUSH_ID,"gzw");
+        Account.pushId = sp.getString(KEY_PUSH_ID,"");
         Account.isBind = sp.getBoolean(KEY_IS_BIND,false);
     }
 
