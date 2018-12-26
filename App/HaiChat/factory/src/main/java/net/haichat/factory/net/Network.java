@@ -24,4 +24,12 @@ public class Network {
                 .build();
     }
 
+    /**
+     * 获取 Api 接口
+     * @return
+     */
+    public static ApiService getApi() {
+        return getRetrofit().create(ApiService.class);
+    }
+
 }

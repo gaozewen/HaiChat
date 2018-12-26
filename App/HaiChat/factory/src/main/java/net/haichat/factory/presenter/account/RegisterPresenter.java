@@ -8,6 +8,7 @@ import net.haichat.factory.data.ApiCallback;
 import net.haichat.factory.data.helper.AccountHelper;
 import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.model.db.User;
+import net.haichat.factory.persistence.Account;
 import net.haichat.factory.presenter.BasePresenter;
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
@@ -21,6 +22,7 @@ public class RegisterPresenter
         super(view);
     }
 
+    // 向 Server 发起 注册请求
     @Override
     public void register(String phone, String password, String name) {
         start(); // 开始执行业务，界面显示 Loading 并 锁定界面(禁止操作)
@@ -34,7 +36,8 @@ public class RegisterPresenter
         } else if (TextUtils.isEmpty(name)) { // 昵称 不能为空
             view.showError(R.string.data_account_register_invalid_parameter_name);
         }else { // 进行网络请求,并设置回调
-            AccountHelper.register(new RegisterModel(phone, password, name),this);
+            RegisterModel registerModel = new RegisterModel(phone, password, name,Account.getPushId());
+            AccountHelper.register(registerModel,this);
         }
     }
 
@@ -73,7 +76,7 @@ public class RegisterPresenter
         Run.onUiAsync(new Action() {
             @Override
             public void call() {
-                view.showError(strRes); // 提示注册失败
+                view.showError(strRes); // 显示 失败原因
             }
         });
     }
