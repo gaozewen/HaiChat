@@ -255,4 +255,19 @@ public class UserFactory {
                 .setParameter("targetId", target.getId())
                 .uniqueResult());
     }
+
+    /**
+     * 模糊搜索用户
+     *
+     * @param name 模糊查询，允许为空
+     * @return
+     */
+    public static List<User> search(String name) {
+        // name 忽略大小写，使用 like 模糊查询，头像 和 描述 必须完善才能被查询到
+        return Hib.execute(session -> (List<User>) session
+                .createQuery("from User where lower(name) like :name and portrait is not null and description is not null")
+                .setParameter("name", "%" + (name == null ? "" : name) + "%")
+                .setMaxResults(20) // 至多返回 20 条
+                .list());
+    }
 }
