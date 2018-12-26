@@ -115,6 +115,10 @@ public class Account {
 
         Account.pushId = sp.getString(KEY_PUSH_ID, "");
         Account.isBind = sp.getBoolean(KEY_IS_BIND, false);
+        Account.token = sp.getString(KEY_TOKEN, "");
+        Account.userId = sp.getString(KEY_USER_ID, "");
+        Account.account = sp.getString(KEY_ACCOUNT, "");
+
     }
 
     /**
@@ -142,6 +146,14 @@ public class Account {
                 .from(User.class)
                 .where(User_Table.id.eq(userId))
                 .querySingle();
+    }
+
+    /**
+     * 获取当前 登录 的 token
+     * @return String
+     */
+    public static String getToken(){
+        return token;
     }
 
 }
