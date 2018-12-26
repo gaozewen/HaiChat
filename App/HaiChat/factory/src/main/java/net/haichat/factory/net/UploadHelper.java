@@ -26,8 +26,8 @@ public class UploadHelper {
     public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
     // 上传的仓库名
     private static final String BUCKET_NAME = "italker-new";
-    private static final String ACCESS_KEY_ID = "";
-    private static final String ACCESS_KEY_SECRET = "";
+    private static final String ACCESS_KEY_ID = "LTAIYQD07p05pHQW";
+    private static final String ACCESS_KEY_SECRET = "2txxzT8JXiHKEdEjylumFy6sXcDQ0G";
 
 
     private static OSS getClient() {
@@ -56,10 +56,7 @@ public class UploadHelper {
             // 开始同步上传
             PutObjectResult result = client.putObject(request);
             // 得到一个外网可访问的地址
-            String url = client.presignPublicObjectURL(BUCKET_NAME, objKey);
-            // 格式打印输出
-            Log.d(TAG, String.format("PublicObjectURL:%s", url));
-            return url;
+            return client.presignPublicObjectURL(BUCKET_NAME, objKey);
         } catch (Exception e) {
             e.printStackTrace();
             // 如果有异常则返回空

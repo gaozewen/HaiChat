@@ -24,6 +24,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -31,26 +35,37 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     // 使用 父工程定义的版本号
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+
     // RecycleAdapter 中需要继承
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
+
     // butterknife
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+
     // design 包中包含了许多 support 包中的 控件 和 主题
     api "com.android.support:design:$rootProject.ext.supportVersion"
+
     // 老师写的 UI 控件包，简化 Material Design 低版本的适配
     api "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+
     // 老师写的 RES 资源包，包括常见的 颜色 高度
     api "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
+
     // 圆形头像的库
     api "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
+
     // glide 图片加载框架
     api "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+
     // 图片剪切 框架
     api "com.github.yalantis:ucrop:$rootProject.ext.ucropVersion"
+
     // 老师写的 对 handler 封装的包
     api "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
+
     // 谷歌 权限管理包
     api "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
 

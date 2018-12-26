@@ -22,6 +22,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -29,17 +33,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     api project(':common')
-
     api "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
-
     api "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
     api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     api "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
-
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${rootProject.ext.dbflowVersion}"
     api "com.github.Raizlabs.DBFlow:dbflow-core:${rootProject.ext.dbflowVersion}"
     api "com.github.Raizlabs.DBFlow:dbflow:${rootProject.ext.dbflowVersion}"
-
 }

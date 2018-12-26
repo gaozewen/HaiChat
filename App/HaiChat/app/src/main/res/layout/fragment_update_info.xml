@@ -24,6 +24,7 @@
             app:title="@string/label_update_info_tips"
             app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1" />
 
+        <!-- portrait -->
         <net.haichat.common.widget.PortraitView
             android:id="@+id/im_portrait"
             android:layout_width="@dimen/portraitMaxSize"
@@ -48,6 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/im_portrait" />
 
+        <!-- sex -->
         <ImageView
             android:id="@+id/im_sex"
             android:layout_width="24dp"
@@ -59,7 +61,7 @@
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/im_portrait"
             app:layout_constraintEnd_toEndOf="@+id/im_portrait" />
-
+        <!-- desc -->
         <net.qiujuer.genius.ui.widget.EditText
             android:id="@+id/edit_desc"
             android:layout_width="0dp"

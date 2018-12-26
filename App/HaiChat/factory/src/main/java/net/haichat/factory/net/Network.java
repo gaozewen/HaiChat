@@ -29,7 +29,7 @@ public class Network {
     }
 
     private Network() {
-
+        getRetrofit(); // 客户端启动时就加载
     }
 
     // 构建一个 Retrofit

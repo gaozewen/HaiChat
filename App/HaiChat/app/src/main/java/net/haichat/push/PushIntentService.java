@@ -31,14 +31,12 @@ public class PushIntentService extends GTIntentService {
         byte[] payload = msg.getPayload();
         if (payload != null) {
             String message = new String(payload);
-            Log.i(TAG, "onReceiveMessageData -> " + message);
             onMessageArrived(message);
         }
     }
 
     @Override
     public void onReceiveClientId(Context context, String clientid) {
-        Log.i(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
         onInitClientId(clientid); // 初始化 PushId
     }
 

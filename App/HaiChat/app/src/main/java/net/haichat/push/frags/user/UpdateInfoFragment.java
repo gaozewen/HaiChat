@@ -3,19 +3,27 @@ package net.haichat.push.frags.user;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yalantis.ucrop.UCrop;
 
 import net.haichat.common.app.Application;
 import net.haichat.common.app.Fragment;
+import net.haichat.common.app.PresenterFragment;
 import net.haichat.common.widget.PortraitView;
 import net.haichat.factory.Factory;
 import net.haichat.factory.net.UploadHelper;
+import net.haichat.factory.presenter.user.UpdateInfoContract;
 import net.haichat.push.R;
+import net.haichat.push.activities.MainActivity;
 import net.haichat.push.frags.media.GalleryFragment;
+import net.qiujuer.genius.ui.widget.Loading;
 
 import java.io.File;
 
@@ -27,10 +35,22 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 更新 用户信息的 界面
  */
-public class UpdateInfoFragment extends Fragment {
+public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Presenter>
+        implements UpdateInfoContract.View {
 
     @BindView(R.id.im_portrait)
     PortraitView mPortrait;
+    @BindView(R.id.im_sex)
+    ImageView mSex;
+    @BindView(R.id.edit_desc)
+    EditText mDesc;
+    @BindView(R.id.loading)
+    Loading mLoading;
+    @BindView(R.id.btn_submit)
+    Button mSubmit;
+
+    private String mPortraitPath;
+    private boolean isMan = true;
 
     public UpdateInfoFragment() {
         // Required empty public constructor
@@ -39,6 +59,11 @@ public class UpdateInfoFragment extends Fragment {
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_update_info;
+    }
+    // initPresenter
+    @Override
+    protected UpdateInfoContract.Presenter initPresenter() {
+        return null;
     }
 
     @OnClick(R.id.im_portrait)
@@ -86,31 +111,60 @@ public class UpdateInfoFragment extends Fragment {
             }
 
         } else if (resultCode == UCrop.RESULT_ERROR) {
-            final Throwable cropError = UCrop.getError(data);
+            Application.showToast(R.string.data_rsp_error_unknown); // 提示未知错误
+            // final Throwable cropError = UCrop.getError(data); // 不处理错误
         }
     }
 
-    /**
-     * 将 选中的头像图片 在 界面上显示
-     * @param uri
-     */
+    // portrait 将 选中的头像图片 在 界面上显示
     private void loadPortrait(Uri uri) {
-        Glide.with(this)
-                .load(uri)
-                .asBitmap()
-                .centerCrop()
-                .into(mPortrait);
+        mPortraitPath = uri.getPath(); // 本地缓存地址
+        Glide.with(this).load(uri).asBitmap().centerCrop().into(mPortrait);
+    }
 
-        // 获取 本地文件地址
-        String localPath = uri.getPath();
-        Log.e("gzw","localPath: "+localPath);
+    // sex
+    @OnClick(R.id.im_sex)
+    void onSexClick() {
+        isMan = !isMan;
+        Drawable drawable = getResources().getDrawable(isMan ? R.drawable.ic_sex_man : R.drawable.ic_sex_woman);
 
-        Factory.runOnAsync(new Runnable() {
-            @Override
-            public void run() {
-                String url = UploadHelper.uploadPortrait(localPath);
-                Log.e("gzw","callbackUrl: "+url);
-            }
-        });
+        mSex.setImageDrawable(drawable);
+        mSex.getBackground().setLevel(isMan ? 0 : 1); // 设置背景的层级,切换颜色
+    }
+
+    // submit
+    @OnClick(R.id.btn_submit)
+    void onSubmitClick() {
+        String desc = mDesc.getText().toString();
+        mPresenter.update(mPortraitPath, isMan, desc);
+    }
+
+    @Override
+    public void showError(int str) {
+        super.showError(str);
+
+        mLoading.stop();
+        mPortrait.setEnabled(true);
+        mDesc.setEnabled(true);
+        mSex.setEnabled(true);
+        mSubmit.setEnabled(true);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+
+        mLoading.start();
+        mPortrait.setEnabled(false);
+        mDesc.setEnabled(false);
+        mSex.setEnabled(false);
+        mSubmit.setEnabled(false);
+    }
+
+
+    @Override
+    public void updateSucceed() {
+        MainActivity.show(getContext());
+        getActivity().finish();
     }
 }

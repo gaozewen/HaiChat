@@ -4,10 +4,13 @@ import net.haichat.factory.model.api.RespModel;
 import net.haichat.factory.model.api.account.AccountRespModel;
 import net.haichat.factory.model.api.account.LoginModel;
 import net.haichat.factory.model.api.account.RegisterModel;
+import net.haichat.factory.model.api.user.UserUpdateModel;
+import net.haichat.factory.model.card.UserCard;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -43,4 +46,14 @@ public interface ApiService {
     @POST("account/bind/{pushId}")
     Call<RespModel<AccountRespModel>> accountBind(
             @Path(encoded = true, value = "pushId") String pushId);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userUpdateModel UserUpdateModel
+     * @return RespModel<UserCard>
+     */
+    @PUT("user/updateInfo")
+    Call<RespModel<UserCard>> updateInfo(@Body UserUpdateModel userUpdateModel);
+
 }
