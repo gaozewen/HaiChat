@@ -1,4 +1,4 @@
-package net.haichat.factory.callback;
+package net.haichat.factory.data;
 
 import android.support.annotation.StringRes;
 

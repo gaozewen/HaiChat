@@ -9,7 +9,7 @@ import android.util.Log;
 import com.igexin.sdk.PushConsts;
 
 import net.haichat.factory.Factory;
-import net.haichat.factory.callback.helper.AccountHelper;
+import net.haichat.factory.data.helper.AccountHelper;
 import net.haichat.factory.persistence.Account;
 
 /**

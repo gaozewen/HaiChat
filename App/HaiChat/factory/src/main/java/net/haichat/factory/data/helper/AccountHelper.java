@@ -1,8 +1,8 @@
-package net.haichat.factory.callback.helper;
+package net.haichat.factory.data.helper;
 
 import net.haichat.factory.Factory;
 import net.haichat.factory.R;
-import net.haichat.factory.callback.ApiCallback;
+import net.haichat.factory.data.ApiCallback;
 import net.haichat.factory.model.api.RespModel;
 import net.haichat.factory.model.api.account.AccountRespModel;
 import net.haichat.factory.model.api.account.RegisterModel;
@@ -43,12 +43,28 @@ public class AccountHelper {
                 if (respModel != null && respModel.success()) { // 注册成功
                     // 拿到实体
                     AccountRespModel accountRespModel = respModel.getResult();
+
+                    User user = accountRespModel.getUser();
+                    user.save(); // 保存进 DBFlow
+                    // 使用 DBFlow 进行数据库写入 和 缓存绑定
+                    // 1. 直接保存 ==> 只能保存自己
+                    // user.syncLoginInfo();
+                    // 2. 通过 ModelAdapter 保存 ==> 可以进行 集合存储
+                    // FlowManager.getModelAdapter(User.class).syncLoginInfo(user);
+                    // 3. 放在事务中
+                    // DatabaseDefinition dd = FlowManager.getDatabase(AppDatabase.class);
+                    // dd.beginTransactionAsync(new ITransaction() {
+                    //     @Override
+                    //     public void execute(DatabaseWrapper databaseWrapper) {
+                    //         FlowManager.getModelAdapter(User.class).syncLoginInfo(user);
+                    //     }
+                    // }).build().execute();// 异步
+
+                    Account.syncLoginInfo(accountRespModel); // 同步到 XML 进行持久化保存
+
                     // 判断绑定状态
                     if(accountRespModel.isBind()){ // 已绑定 pushId
-                        User user = accountRespModel.getUser();
-                        // todo: 进行数据库写入 和 缓存绑定
-                        // 执行 注册成功 Presenter 逻辑
-                        callback.onDataLoadedSuccess(user);
+                        callback.onDataLoadedSuccess(user); // 执行 注册成功 Presenter 逻辑
                     }else { // 未绑定 设备 id
                         // todo: 绑定 pushId(设备号)
                         bindPushId(callback);

@@ -1,21 +1,40 @@
 package net.haichat.factory.model.db;
 
+
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.Date;
 
-public class User {
+@Table(database = AppDatabase.class)
+public class User extends BaseModel {
 
+    public static final int SEX_MAN = 1;
+    public static final int SEX_WOMAN = 2;
+
+    @PrimaryKey
     private String id;
+    @Column
     private String name;
+    @Column
     private String phone;
+    @Column
     private String portrait;
+    @Column
     private String desc;
+    @Column
     private int sex = 0;
-
+    @Column
     private String alias; // 我对某人的 备注信息
-
+    @Column
     private int followings; // 用户 关注的人的数量
+    @Column
     private int followers; // 用户 粉丝的数量
+    @Column
     private boolean isFollowed; // 我 与 当前 User 的关系状态 ,是否 已经关注 当前 User
+    @Column
     private Date modifyAt; // 用户信息 最后的更新时间
 
     public String getId() {

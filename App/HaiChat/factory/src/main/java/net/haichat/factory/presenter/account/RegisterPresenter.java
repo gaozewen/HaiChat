@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import net.haichat.common.Common;
 import net.haichat.factory.R;
-import net.haichat.factory.callback.ApiCallback;
-import net.haichat.factory.callback.helper.AccountHelper;
+import net.haichat.factory.data.ApiCallback;
+import net.haichat.factory.data.helper.AccountHelper;
 import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.model.db.User;
 import net.haichat.factory.presenter.BasePresenter;

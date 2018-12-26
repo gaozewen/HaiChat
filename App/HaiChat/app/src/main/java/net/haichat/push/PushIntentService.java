@@ -10,7 +10,7 @@ import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 
 import net.haichat.factory.Factory;
-import net.haichat.factory.callback.helper.AccountHelper;
+import net.haichat.factory.data.helper.AccountHelper;
 import net.haichat.factory.persistence.Account;
 
 public class PushIntentService extends GTIntentService {

@@ -4,11 +4,14 @@ import android.support.annotation.StringRes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import net.haichat.common.app.Application;
-import net.haichat.factory.callback.ApiCallback;
+import net.haichat.factory.data.ApiCallback;
 import net.haichat.factory.model.api.RespModel;
 import net.haichat.factory.persistence.Account;
+import net.haichat.factory.utils.DBFlowExclusionStrategy;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -30,15 +33,20 @@ public class Factory {
         gson = new GsonBuilder()
                 // 设置时间格式
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-                // todo： 设置一个 过滤器，数据库级别的 Model 不进行 json 转换
-                //.setExclusionStrategies()
+                // 设置一个 过滤器，数据库级别的 Model 不进行 json 转换
+                .setExclusionStrategies(new DBFlowExclusionStrategy())
                 .create();
     }
 
     /**
      * Factory 中的初始化操作
      */
-    public static void setup(){
+    public static void setup() {
+        // 初始化 DBFlow 数据库
+        FlowManager.init(new FlowConfig.Builder(app())
+                .openDatabasesOnInit(true) // 初始化同时 打开数据库
+                .build());
+
         // 从 sp 中初始化 账户相关的 配置信息(pushId...)
         Account.loadDataFromSp(app());
     }
@@ -146,12 +154,12 @@ public class Factory {
 
     /**
      * 处理 推送来 的消息
+     *
      * @param message 消息
      */
-    public static void dispatchPushMessage(String message){
+    public static void dispatchPushMessage(String message) {
         // TODO: 对接收到的推送信息 进行处理
     }
-
 
 
 }
