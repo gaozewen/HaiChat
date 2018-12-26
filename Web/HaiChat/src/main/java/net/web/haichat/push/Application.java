@@ -1,6 +1,5 @@
 package net.web.haichat.push;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import net.web.haichat.push.provider.AuthRequestFilter;
 import net.web.haichat.push.provider.GsonProvider;
 import net.web.haichat.push.service.AccountService;

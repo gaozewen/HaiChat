@@ -63,9 +63,6 @@ public class Hib {
         }
     }
 
-    public interface QueryOnly {
-        void query(Session session);
-    }
     // 用于 用户实际操作的 一个接口
     // 具有 返回值 T
     public interface Handler<T> {
