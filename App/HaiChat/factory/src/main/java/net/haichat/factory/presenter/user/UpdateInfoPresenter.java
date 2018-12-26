@@ -11,6 +11,8 @@ import net.haichat.factory.model.card.UserCard;
 import net.haichat.factory.model.db.User;
 import net.haichat.factory.net.UploadHelper;
 import net.haichat.factory.presenter.BasePresenter;
+import net.qiujuer.genius.kit.handler.Run;
+
 
 public class UpdateInfoPresenter extends BasePresenter<UpdateInfoContract.View>
         implements UpdateInfoContract.Presenter, ApiCallback.Callback<UserCard> {
@@ -40,19 +42,21 @@ public class UpdateInfoPresenter extends BasePresenter<UpdateInfoContract.View>
                     isMan ? User.SEX_MAN : User.SEX_WOMAN
             );
             // 发送 Api 请求 更新 用户信息
-            UserHelper.update(model,UpdateInfoPresenter.this);
-
-
+            UserHelper.update(model, UpdateInfoPresenter.this);
         });
     }
 
     @Override
     public void onDataLoadedSuccess(UserCard userCard) {
-
+        final UpdateInfoContract.View view = getView();
+        if (view == null) return; // 界面已经销毁
+        Run.onUiAsync(view::updateSucceed); // UpdateInfoFragment 中 方法
     }
 
     @Override
     public void onDataNotAvailable(int strRes) {
-
+        final UpdateInfoContract.View view = getView();
+        if (view == null) return; // 界面已经销毁
+        Run.onUiAsync(() -> view.showError(strRes)); // 显示 失败 原因
     }
 }

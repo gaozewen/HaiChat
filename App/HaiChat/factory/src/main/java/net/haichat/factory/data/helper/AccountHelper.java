@@ -101,7 +101,7 @@ public class AccountHelper {
                 //     }
                 // }).build().execute();// 异步
 
-                Account.syncLoginInfo(accountRespModel); // 同步到 XML 进行持久化保存
+                Account.syncLoginInfo(accountRespModel); // (保存到 sp 中)同步到 XML 进行持久化保存
 
                 // 判断绑定状态
                 if (accountRespModel.isBind()) { // 已绑定 pushId

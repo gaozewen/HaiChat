@@ -1,7 +1,6 @@
 package net.haichat.factory.net;
 
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
@@ -26,8 +25,8 @@ public class UploadHelper {
     public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
     // 上传的仓库名
     private static final String BUCKET_NAME = "italker-new";
-    private static final String ACCESS_KEY_ID = "LTAIYQD07p05pHQW";
-    private static final String ACCESS_KEY_SECRET = "2txxzT8JXiHKEdEjylumFy6sXcDQ0G";
+    private static final String ACCESS_KEY_ID = "";
+    private static final String ACCESS_KEY_SECRET = "";
 
 
     private static OSS getClient() {

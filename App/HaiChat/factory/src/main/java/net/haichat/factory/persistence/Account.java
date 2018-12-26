@@ -44,7 +44,7 @@ public class Account {
      */
     public static boolean isPerfectUserInfo() {
         if(isLogin()){
-            User self = getLoginInfo();
+            User self = getUserInfo();
             return !TextUtils.isEmpty(self.getDesc())
                     && !TextUtils.isEmpty(self.getPortrait())
                     && self.getSex() != 0;
@@ -144,7 +144,7 @@ public class Account {
      * 从 数据库中 获取 登录信息(是通过 DBFlow Save 的)
      * @return User
      */
-    public static User getLoginInfo() {
+    public static User getUserInfo() {
         // 如果为 null 返回一个 new 的 User ,否则从数据库查询
         return TextUtils.isEmpty(userId) ? new User() : SQLite
                 .select()

@@ -6,8 +6,10 @@ import net.haichat.factory.data.ApiCallback;
 import net.haichat.factory.model.api.RespModel;
 import net.haichat.factory.model.api.user.UserUpdateModel;
 import net.haichat.factory.model.card.UserCard;
+import net.haichat.factory.model.db.User;
 import net.haichat.factory.net.ApiService;
 import net.haichat.factory.net.Network;
+import net.haichat.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +35,8 @@ public class UserHelper {
                 if (respModel != null && respModel.success()) {
                     UserCard card = respModel.getResult();
                     // 通过 DBFlow 保存到 本地数据库
-
+                    User user = card.convertToUser();
+                    user.save();
                     callback.onDataLoadedSuccess(card); // 请求成功 回调
                 } else { // 解析错误码,进行提示
                     Factory.decodeRespCode(respModel,callback);

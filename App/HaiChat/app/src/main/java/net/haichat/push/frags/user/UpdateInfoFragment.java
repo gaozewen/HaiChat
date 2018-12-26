@@ -20,6 +20,7 @@ import net.haichat.common.widget.PortraitView;
 import net.haichat.factory.Factory;
 import net.haichat.factory.net.UploadHelper;
 import net.haichat.factory.presenter.user.UpdateInfoContract;
+import net.haichat.factory.presenter.user.UpdateInfoPresenter;
 import net.haichat.push.R;
 import net.haichat.push.activities.MainActivity;
 import net.haichat.push.frags.media.GalleryFragment;
@@ -63,7 +64,7 @@ public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Pre
     // initPresenter
     @Override
     protected UpdateInfoContract.Presenter initPresenter() {
-        return null;
+        return new UpdateInfoPresenter(this);
     }
 
     @OnClick(R.id.im_portrait)
