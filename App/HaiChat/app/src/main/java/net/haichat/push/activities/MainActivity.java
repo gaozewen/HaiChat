@@ -1,9 +1,8 @@
 package net.haichat.push.activities;
 
-
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -21,9 +20,8 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import net.haichat.common.app.Activity;
 import net.haichat.common.widget.PortraitView;
+import net.haichat.factory.persistence.Account;
 import net.haichat.push.R;
-import net.haichat.push.activities.AccountActivity;
-import net.haichat.push.frags.assist.PermissionsFragment;
 import net.haichat.push.frags.main.ActiveFragment;
 import net.haichat.push.frags.main.ContactFragment;
 import net.haichat.push.frags.main.GroupFragment;
@@ -66,6 +64,14 @@ public class MainActivity extends Activity
      */
     public static void show(Context context){
         context.startActivity(new Intent(context,MainActivity.class));
+    }
+
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        if(Account.isPerfectUserInfo()) return super.initArgs(bundle);
+        // 用户信息未完善
+        UserActivity.show(this);
+        return false;
     }
 
     @Override

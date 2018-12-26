@@ -1,6 +1,5 @@
 package net.haichat.factory.net;
 
-import android.support.annotation.StringRes;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -24,11 +23,11 @@ public class UploadHelper {
 
     private static final String TAG = UploadHelper.class.getSimpleName();
     // 与你们的存储区域有关系
-    public static final String ENDPOINT = "http://oss-cn-shanghai.aliyuncs.com";
+    public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
     // 上传的仓库名
-    private static final String BUCKET_NAME = "haichat";
-    private static final String ACCESS_KEY_ID = "L";
-    private static final String ACCESS_KEY_SECRET = "5";
+    private static final String BUCKET_NAME = "italker-new";
+    private static final String ACCESS_KEY_ID = "LTAIYQD07p05pHQW";
+    private static final String ACCESS_KEY_SECRET = "2txxzT8JXiHKEdEjylumFy6sXcDQ0G";
 
 
     private static OSS getClient() {

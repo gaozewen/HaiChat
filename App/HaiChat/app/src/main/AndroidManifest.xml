@@ -33,17 +33,6 @@
         <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复-->
         <service android:name=".PushIntentService"/>
 
-        <!-- 个推的广播注册 -->
-        <!--<receiver-->
-            <!--android:name=".MessageReceiver"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true"-->
-            <!--android:permission="1000">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-
         <activity
             android:name=".LaunchActivity"
             android:label="@string/title_activity_launch"
@@ -69,7 +58,10 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.UserActivity"
-            android:label="@string/title_activity_user" />
+            android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account"
+            />
 
     </application>
 

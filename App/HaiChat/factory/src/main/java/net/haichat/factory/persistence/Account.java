@@ -43,8 +43,13 @@ public class Account {
      * @return
      */
     public static boolean isPerfectUserInfo() {
-        // TODO: 2018/12/26 isPerfectUserInfo
-        return isLogin();
+        if(isLogin()){
+            User self = getLoginInfo();
+            return !TextUtils.isEmpty(self.getDesc())
+                    && !TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex() != 0;
+        }
+        return false;
     }
 
     /**
