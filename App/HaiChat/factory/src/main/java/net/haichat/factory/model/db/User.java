@@ -6,10 +6,12 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import net.haichat.factory.model.IUser;
+
 import java.util.Date;
 
 @Table(database = AppDatabase.class)
-public class User extends BaseModel {
+public class User extends BaseModel implements IUser {
 
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;

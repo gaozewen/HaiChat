@@ -27,7 +27,7 @@
             android:name=".PushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice"></service>
+            android:process=":pushservice" />
         <!-- 接收并处理 个推 消息的 service -->
         <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复 -->
         <service android:name=".PushIntentService" />
@@ -65,6 +65,9 @@
             android:label="@string/title_search"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
+        <activity
+            android:name=".activities.ChatActivity"
+            android:label="@string/title_activity_chat"></activity>
     </application>
 
 </manifest>

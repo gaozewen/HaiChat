@@ -1,10 +1,11 @@
 package net.haichat.factory.model.card;
 
+import net.haichat.factory.model.IUser;
 import net.haichat.factory.model.db.User;
 
 import java.util.Date;
 
-public class UserCard {
+public class UserCard implements IUser {
     private String id;
     private String name;
     private String phone;
