@@ -18,6 +18,8 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
     protected View mRoot; // 因为 root 可能被复用
     protected Unbinder mRootUnBinder;
     protected PlaceHolderView mPlaceHolderView; // 自定义的占位布局
+    // 为什么定义这个变量，否则每次 切换 tab 页 都要重新初始化
+    protected boolean mIsFirstInitData = true; // 是否是第一次初始化数据
 
 
     // 当 F 添加到 Activity 的时候，最先调用的方法是 onAttach
@@ -55,7 +57,11 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // 触发一次以后就不会触发
+        if (mIsFirstInitData) {
+            mIsFirstInitData = false;
+            onFirstInit();
+        }
         // 当 View 创建完成后，初始化数据
         initData();
     }
@@ -82,6 +88,13 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
      */
     protected void initWidget(View root) {
         mRootUnBinder = ButterKnife.bind(this, root); // 绑定 F 到 root(A) 中
+    }
+
+    /**
+     * 只有 首次 初始化的时候调用
+     */
+    protected void onFirstInit() {
+
     }
 
     /**

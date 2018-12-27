@@ -43,7 +43,7 @@ public class Account {
      * @return
      */
     public static boolean isPerfectUserInfo() {
-        if(isLogin()){
+        if (isLogin()) {
             User self = getUserInfo();
             return !TextUtils.isEmpty(self.getDesc())
                     && !TextUtils.isEmpty(self.getPortrait())
@@ -142,6 +142,7 @@ public class Account {
 
     /**
      * 从 数据库中 获取 登录信息(是通过 DBFlow Save 的)
+     *
      * @return User
      */
     public static User getUserInfo() {
@@ -155,10 +156,20 @@ public class Account {
 
     /**
      * 获取当前 登录 的 token
+     *
      * @return String
      */
-    public static String getToken(){
+    public static String getToken() {
         return token;
+    }
+
+    /**
+     * 获取 登录用户 id
+     *
+     * @return 登录用户的 id
+     */
+    public static String getUserId() {
+        return getUserInfo().getId();
     }
 
 }

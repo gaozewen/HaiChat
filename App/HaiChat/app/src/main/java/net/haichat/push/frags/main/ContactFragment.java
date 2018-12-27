@@ -4,22 +4,28 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.haichat.common.app.Fragment;
+import net.haichat.common.app.PresenterFragment;
 import net.haichat.common.widget.EmptyView;
 import net.haichat.common.widget.PortraitView;
 import net.haichat.common.widget.recycler.RecyclerAdapter;
+import net.haichat.factory.data.ApiCallback;
+import net.haichat.factory.model.card.UserCard;
 import net.haichat.factory.model.db.User;
+import net.haichat.factory.presenter.contact.ContactContract;
+import net.haichat.factory.presenter.contact.ContactPresenter;
 import net.haichat.push.R;
 import net.haichat.push.activities.ChatActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends PresenterFragment<ContactContract.Presenter>
+        implements ContactContract.View, ApiCallback.Callback<List<UserCard>> {
 
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
@@ -69,6 +75,39 @@ public class ContactFragment extends Fragment {
         // 初始化 自定义的 占位布局
         mEmptyView.bind(mRecycler);
         setPlaceHolderView(mEmptyView);
+    }
+
+    @Override
+    protected void onFirstInit() {
+        super.onFirstInit();
+        mPresenter.start(); // 只在第一次初始化的时候，加载数据
+    }
+
+    @Override
+    protected ContactContract.Presenter initPresenter() {
+        // 初始化 Presenter
+        return new ContactPresenter(this);
+    }
+
+    @Override
+    public void onDataLoadedSuccess(List<UserCard> userCards) {
+
+    }
+
+    @Override
+    public void onDataNotAvailable(int strRes) {
+
+    }
+
+    @Override
+    public RecyclerAdapter<User> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        // 数据改变，刷新 界面
+        mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
