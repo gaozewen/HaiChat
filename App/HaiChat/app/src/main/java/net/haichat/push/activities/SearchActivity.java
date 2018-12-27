@@ -9,18 +9,20 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
+import net.haichat.common.app.Fragment;
 import net.haichat.common.app.ToolbarActivity;
 import net.haichat.push.R;
+import net.haichat.push.frags.search.SearchGroupFragment;
+import net.haichat.push.frags.search.SearchUserFragment;
 
 public class SearchActivity extends ToolbarActivity {
     private static final String EXTRA_TYPE = "EXTRA_TYPE";
     public static final int TYPE_USER = 1; // 搜索人
     public static final int TYPE_GROUP = 2; // 搜索群
 
-
     private int curType; // 具体需要显示的类型
+    private SearchFragment mSearchFragment;
 
     /**
      * 显示搜索界面
@@ -46,13 +48,36 @@ public class SearchActivity extends ToolbarActivity {
     }
 
     @Override
+    protected void initWidget() {
+        super.initWidget();
+
+        // 显示对应的Fragment
+        Fragment fragment;
+        if (curType == TYPE_USER) {
+            SearchUserFragment searchUserFragment = new SearchUserFragment();
+            fragment = searchUserFragment;
+            mSearchFragment = searchUserFragment;
+        } else {
+            SearchGroupFragment searchGroupFragment = new SearchGroupFragment();
+            fragment = searchGroupFragment;
+            mSearchFragment = searchGroupFragment;
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.lay_container, fragment)
+                .commit();
+
+    }
+
+    // 初始化 toolbar 菜单
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_items, menu);
         // 找到搜索菜单
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        if(searchView != null){
+        if (searchView != null) {
             // 拿到一个搜索管理器
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -87,8 +112,14 @@ public class SearchActivity extends ToolbarActivity {
      * @param query 搜索的文字
      */
     private void search(String query) {
-//        if (mSearchFragment == null)
-//            return;
-//        mSearchFragment.search(query);
+        if (mSearchFragment == null) return;
+        mSearchFragment.search(query);
+    }
+
+    /**
+     * 搜索的Fragment必须继承的接口
+     */
+    public interface SearchFragment {
+        void search(String content);
     }
 }
