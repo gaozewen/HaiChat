@@ -123,7 +123,11 @@ public class MainActivity extends Activity
      */
     @OnClick(R.id.im_search)
     void onSearchMenuClick() {
-
+        // 群界面点击 --> 群搜索界面，联系人界面点击 --> 联系人界面
+        // 其他都为 人搜索的界面
+        int type = Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)
+                ? SearchActivity.TYPE_GROUP : SearchActivity.TYPE_USER;
+        SearchActivity.show(this,type);
     }
 
     /**
@@ -133,13 +137,11 @@ public class MainActivity extends Activity
     void onActionClick() {
         // 判断 当前 tab 是 群 还是 联系人
         if(Objects.equals(mNavHelper.getCurrentTab().extra,R.string.title_group)){
-            // todo: 打开群创建界面
+            // todo: 打开 群创建 界面
         }else {
-            
+            // 打开 添加用户 界面(本质：搜索用户界面)
+            SearchActivity.show(this,SearchActivity.TYPE_USER);
         }
-
-        SearchActivity.show(this,SearchActivity.TYPE_USER);
-        AccountActivity.show(this);
     }
 
     boolean isFirst = true; // 第一次添加，不需要移除原来的 Fragment

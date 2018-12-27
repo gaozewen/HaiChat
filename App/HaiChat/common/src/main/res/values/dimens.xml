@@ -12,4 +12,5 @@
 
     <!-- 名字字体的大小 -->
     <dimen name="fontNameSize">15sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
