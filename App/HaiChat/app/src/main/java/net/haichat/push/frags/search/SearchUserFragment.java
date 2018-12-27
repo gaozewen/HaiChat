@@ -69,6 +69,13 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         setPlaceHolderView(mEmptyView);
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        // 自动发起首次搜索
+        search("");
+    }
+
     // 执行 搜索 业务逻辑
     @Override
     public void search(String content) {

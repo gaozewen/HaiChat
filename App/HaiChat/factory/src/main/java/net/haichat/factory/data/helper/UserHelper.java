@@ -11,6 +11,8 @@ import net.haichat.factory.net.ApiService;
 import net.haichat.factory.net.Network;
 import net.haichat.factory.persistence.Account;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,5 +50,31 @@ public class UserHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
+
+    // 搜索的方法
+    public static Call search(String name, final ApiCallback.Callback<List<UserCard>> callback) {
+        ApiService api = Network.getApi();
+        Call<RespModel<List<UserCard>>> call = api.searchUser(name);
+
+        call.enqueue(new Callback<RespModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RespModel<List<UserCard>>> call, Response<RespModel<List<UserCard>>> response) {
+                RespModel<List<UserCard>> respModel = response.body();
+                if (respModel != null && respModel.success()) {
+                    callback.onDataLoadedSuccess(respModel.getResult());
+                } else {
+                    Factory.decodeRespCode(respModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+
+        // 把当前的调度者返回
+        return call;
     }
 }

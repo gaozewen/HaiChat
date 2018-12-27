@@ -7,8 +7,11 @@ import net.haichat.factory.model.api.account.RegisterModel;
 import net.haichat.factory.model.api.user.UserUpdateModel;
 import net.haichat.factory.model.card.UserCard;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -56,4 +59,12 @@ public interface ApiService {
     @PUT("user/updateInfo")
     Call<RespModel<UserCard>> updateInfo(@Body UserUpdateModel userUpdateModel);
 
+    /**
+     * 搜索 用户
+     *
+     * @param name
+     * @return
+     */
+    @GET("user/search/{name}")
+    Call<RespModel<List<UserCard>>> searchUser(@Path("name") String name);
 }

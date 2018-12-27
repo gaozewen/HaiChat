@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/len_2"
     android:layout_marginBottom="@dimen/len_2"
     android:background="@color/white"
@@ -14,12 +14,13 @@
     android:paddingBottom="@dimen/len_12">
 
     <!-- 头像 -->
-    <net.qiujuer.italker.common.widget.PortraitView
+    <net.haichat.common.widget.PortraitView
         android:id="@+id/im_portrait"
         android:layout_width="@dimen/portraitSize"
         android:layout_height="@dimen/portraitSize"
         android:layout_gravity="start|center_vertical"
         android:src="@drawable/default_portrait" />
+
     <!-- 用户昵称 -->
     <TextView
         android:id="@+id/txt_name"
