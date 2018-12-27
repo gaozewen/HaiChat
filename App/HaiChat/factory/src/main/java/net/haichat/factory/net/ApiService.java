@@ -52,19 +52,21 @@ public interface ApiService {
 
     /**
      * 更新用户信息
-     *
-     * @param userUpdateModel UserUpdateModel
-     * @return RespModel<UserCard>
      */
     @PUT("user/updateInfo")
     Call<RespModel<UserCard>> updateInfo(@Body UserUpdateModel userUpdateModel);
 
     /**
      * 搜索 用户
-     *
-     * @param name
-     * @return
      */
     @GET("user/search/{name}")
     Call<RespModel<List<UserCard>>> searchUser(@Path("name") String name);
+
+    /**
+     * 用户关注接口
+     */
+    @PUT("user/follow/{followId}")
+    Call<RespModel<UserCard>> follow(@Path("followId") String userId);
+
+
 }

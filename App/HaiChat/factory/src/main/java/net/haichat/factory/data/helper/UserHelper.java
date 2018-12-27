@@ -10,6 +10,7 @@ import net.haichat.factory.model.db.User;
 import net.haichat.factory.net.ApiService;
 import net.haichat.factory.net.Network;
 import net.haichat.factory.persistence.Account;
+import net.haichat.factory.presenter.contact.FollowPresenter;
 
 import java.util.List;
 
@@ -76,5 +77,35 @@ public class UserHelper {
 
         // 把当前的调度者返回
         return call;
+    }
+
+    // 关注的方法
+    public static void follow(String targetId, final ApiCallback.Callback<UserCard> callback) {
+        ApiService api = Network.getApi();
+        Call<RespModel<UserCard>> call = api.follow(targetId);
+
+        call.enqueue(new Callback<RespModel<UserCard>>() {
+
+            @Override
+            public void onResponse(Call<RespModel<UserCard>> call, Response<RespModel<UserCard>> response) {
+                RespModel<UserCard> respModel = response.body();
+                if (respModel != null && respModel.success()) {
+                    UserCard card = respModel.getResult();
+                    // 通过 DBFlow 保存到 本地数据库
+                    User user = card.convertToUser();
+                    user.save();
+                    //todo: 通知 联系人界面刷新
+                    callback.onDataLoadedSuccess(card);
+                } else {
+                    Factory.decodeRespCode(respModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespModel<UserCard>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+
     }
 }
