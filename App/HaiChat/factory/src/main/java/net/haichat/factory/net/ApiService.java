@@ -68,5 +68,10 @@ public interface ApiService {
     @PUT("user/follow/{followId}")
     Call<RespModel<UserCard>> follow(@Path("followId") String userId);
 
+    /**
+     * 获取 (登录用户) 联系人列表
+     */
+    @GET("user/contact")
+    Call<RespModel<List<UserCard>>> contacts();
 
 }

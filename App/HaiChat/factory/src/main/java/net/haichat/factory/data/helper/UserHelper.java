@@ -9,8 +9,6 @@ import net.haichat.factory.model.card.UserCard;
 import net.haichat.factory.model.db.User;
 import net.haichat.factory.net.ApiService;
 import net.haichat.factory.net.Network;
-import net.haichat.factory.persistence.Account;
-import net.haichat.factory.presenter.contact.FollowPresenter;
 
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class UserHelper {
                     user.save();
                     callback.onDataLoadedSuccess(card); // 请求成功 回调
                 } else { // 解析错误码,进行提示
-                    Factory.decodeRespCode(respModel,callback);
+                    Factory.decodeRespCode(respModel, callback);
                 }
             }
 
@@ -106,6 +104,26 @@ public class UserHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
 
+    // 刷新 联系人 列表
+    public static void refreshContacts(final ApiCallback.Callback<List<UserCard>> callback) {
+        ApiService api = Network.getApi();
+        api.contacts().enqueue(new Callback<RespModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RespModel<List<UserCard>>> call, Response<RespModel<List<UserCard>>> response) {
+                RespModel<List<UserCard>> respModel = response.body();
+                if (respModel != null && respModel.success()) {
+                    callback.onDataLoadedSuccess(respModel.getResult());
+                } else {
+                    Factory.decodeRespCode(respModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
     }
 }
