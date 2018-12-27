@@ -27,11 +27,10 @@
             android:name=".PushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice">
-        </service>
+            android:process=":pushservice"></service>
         <!-- 接收并处理 个推 消息的 service -->
-        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复-->
-        <service android:name=".PushIntentService"/>
+        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复 -->
+        <service android:name=".PushIntentService" />
 
         <activity
             android:name=".LaunchActivity"
@@ -60,9 +59,12 @@
             android:name=".activities.UserActivity"
             android:label="@string/title_activity_user"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Account"
-            />
-
+            android:theme="@style/AppTheme.Account" />
+        <activity
+            android:name=".activities.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar" />
     </application>
 
 </manifest>

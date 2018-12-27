@@ -131,6 +131,14 @@ public class MainActivity extends Activity
      */
     @OnClick(R.id.btn_action)
     void onActionClick() {
+        // 判断 当前 tab 是 群 还是 联系人
+        if(Objects.equals(mNavHelper.getCurrentTab().extra,R.string.title_group)){
+            // todo: 打开群创建界面
+        }else {
+            
+        }
+
+        SearchActivity.show(this,SearchActivity.TYPE_USER);
         AccountActivity.show(this);
     }
 

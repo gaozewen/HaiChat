@@ -6,10 +6,11 @@ import net.haichat.factory.presenter.BaseContract;
 
 /**
  * MVP 模式 使用
+ *
  * @param <Presenter>
  */
 public abstract class PresenterFragment<Presenter extends BaseContract.Presenter> extends Fragment
- implements BaseContract.View<Presenter> {
+        implements BaseContract.View<Presenter> {
 
     protected Presenter mPresenter;
 
@@ -22,6 +23,7 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
 
     /**
      * 初始化 Presenter
+     *
      * @return Presenter
      */
     protected abstract Presenter initPresenter();
@@ -29,12 +31,16 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
     @Override
     public void showError(int str) {
         // 显示错误信息
-        Application.showToast(str);
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerError(str);
+        } else {
+            Application.showToast(str);
+        }
     }
 
     @Override
     public void showLoading() {
-        // todo: 显示一个 Loading
+        if (mPlaceHolderView != null) mPlaceHolderView.triggerLoading();
     }
 
     @Override
